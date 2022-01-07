@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const ErrorMiddleware = require("./middlewares/ErrorMiddleware");
 
 // Routes
 const AuthRoutes = require("./routes/AuthRoutes");
@@ -12,6 +13,9 @@ app.use(express.json());
 
 // routes
 app.use("/api/auth", AuthRoutes);
+
+// ErrorMiddleware
+app.use(ErrorMiddleware);
 
 const startServer = async () => {
     try {

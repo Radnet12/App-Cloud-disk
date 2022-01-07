@@ -1,46 +1,44 @@
 // Modules
-const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
+const ApiError = require("../../../04_Advanced-auth/back/exceptions/ApiError");
 
-// Models
-const UserModel = require("../models/UserModel");
+// Services
+const AuthService = require("../services/AuthService");
 
 class AuthController {
-    async registration(req, res) {
+    async registration(req, res, next) {
         try {
             // @@Validation
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {
-                return res
-                    .status(400)
-                    .json({ message: "Ошибка при валидации данных!", errors });
+                next(
+                    ApiError.BadRequest("Ошибка при валидации данных!", errors)
+                );
             }
             // @@Validation
 
             // Getting data
             const { email, password } = req.body;
 
-            // Checking if such email is already exists or not
-            const candidate = await UserModel.findOne({ email });
-
-            if (candidate) {
-                return res.status(400).json({
-                    message: `Пользователь с адресной почтой ${email} уже существует!`,
-                });
-            }
-
-            // Hashing password
-            const hashedPassword = await bcrypt.hash(password, 15);
-
-            // Saving to DB
-            const newUser = new UserModel({ email, password: hashedPassword });
-            await newUser.save();
+            const newUser = await AuthService.registration(email, password);
 
             return res.json(newUser);
         } catch (e) {
-            console.log("Ошибка:", e);
-            res.json({ message: "Ошибка при регистрации!" });
+            next(e);
+        }
+    }
+
+    async login(req, res, next) {
+        try {
+            // Getting data
+            const { email, password } = req.body;
+
+            const data = await AuthService.login(email, password);
+
+            return res.json(data);
+        } catch (e) {
+            next(e);
         }
     }
 }
