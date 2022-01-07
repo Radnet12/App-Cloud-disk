@@ -5,6 +5,9 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { setupStore } from "./store/store";
 
+// Libs
+import { BrowserRouter } from "react-router-dom";
+
 // Components
 import { App } from "./App";
 
@@ -14,7 +17,9 @@ import "./index.scss";
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={setupStore()}>
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById("root")
