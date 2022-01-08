@@ -1,3 +1,4 @@
+import React from "react";
 
 // Redux
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
@@ -12,13 +13,12 @@ import { AppLayout } from "../../../layout/AppLayout";
 import { AuthRoutes } from "../../../routes/AuthRoutes";
 import { AppRoutes } from "../../../routes/AppRoutes";
 import { RouteNames } from "../../../routes/RouteNames";
-import { ReactNode } from "react";
 
-export const Router = () => {
+export const Router: React.FC = () => {
     // **Redux State
     const { isAuth } = useTypedSelector((state) => state.user);
 
-    const renderAuthRoutes = (): ReactNode => {
+    const renderAuthRoutes = (): React.ReactNode => {
         return [
             ...AuthRoutes.map((route) => (
                 <Route
@@ -35,7 +35,7 @@ export const Router = () => {
         ];
     };
 
-    const renderAppRoutes = (): ReactNode => {
+    const renderAppRoutes = (): React.ReactNode => {
         return [
             ...AppRoutes.map((route) => (
                 <Route

@@ -1,14 +1,21 @@
-@import "./styles/normalize.scss";
+@import "./styles/settings/fonts.scss";
+@import "./styles/settings/normalize.scss";
 
 :root {
     --clr-default-100: #fff;
     --clr-default-900: #000;
+    --clr-primary-400: #0c306b;
+    --clr-secondary-400: #98a9c3;
+    --clr-ui-header: #242424;
+    --clr-ui-background: #1f1f1f;
 }
 
 body {
+    font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-size: 1.6rem;
-    color: var(--clr-default-400);
+    color: var(--clr-default-100);
+    background-color: var(--clr-ui-background);
 }
 
 .wrapper {
@@ -21,5 +28,10 @@ body {
 }
 
 main {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
 }
+
+
+@import "./styles/components/auth.scss";

@@ -1,0 +1,19 @@
+.logo {
+    a {
+        display: flex;
+        align-items: center;
+    }
+
+    &__image {
+        margin-right: 15px;
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &__name {
+        font-weight: 700;
+        font-size: 2rem;
+        text-transform: uppercase;
+    }
+}

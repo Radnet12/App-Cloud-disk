@@ -1,13 +1,9 @@
-import { ReactNode } from "react";
+import React from "react";
 
 // Styles
 import "./Container.scss";
 
-type ContainerProps = {
-    children: ReactNode;
-};
-
-export const Container = (props: ContainerProps) => {
+export const Container: React.FC = (props) => {
     // **Props
     const { children } = props;
 
