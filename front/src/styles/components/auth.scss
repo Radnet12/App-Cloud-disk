@@ -1,7 +1,21 @@
 .auth {
     display: flex;
-    flex-direction: column;
     flex-grow: 1;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    &__wrapper {
+        margin-right: auto;
+        margin-left: auto;
+        border-radius: 10px;
+        padding: 25px 30px;
+        max-width: 550px;
+        background-color: var(--clr-default-100);
+
+        @media (max-width: 767px) {
+            padding: 20px 12px;
+        }
+    }
 }

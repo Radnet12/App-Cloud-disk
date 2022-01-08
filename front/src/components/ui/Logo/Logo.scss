@@ -5,7 +5,14 @@
     }
 
     &__image {
+        flex-shrink: 0;
         margin-right: 15px;
+
+        @media (max-width: 767px) {
+            margin-right: 10px;
+            max-width: 40px;
+        }
+
         img {
             max-width: 100%;
         }
@@ -15,5 +22,9 @@
         font-weight: 700;
         font-size: 2rem;
         text-transform: uppercase;
+
+        @media (max-width: 767px) {
+            font-size: 1.4rem;
+        }
     }
 }

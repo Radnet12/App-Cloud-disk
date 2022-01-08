@@ -5,6 +5,9 @@ const { body } = require("express-validator");
 // Controller
 const AuthController = require("../controllers/AuthController");
 
+// Middleware
+const AuthMiddleware = require("../middlewares/AuthMiddleware");
+
 const router = new Router();
 
 // Routes
@@ -18,5 +21,6 @@ router.post(
 );
 
 router.post("/login", AuthController.login);
+router.get("/authorization", AuthMiddleware, AuthController.authentication);
 
 module.exports = router;

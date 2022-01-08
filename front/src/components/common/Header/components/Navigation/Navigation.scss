@@ -1,3 +1,5 @@
+@import "../../../../../styles/variables.scss";
+
 .navigation {
     margin-left: 25px;
 
@@ -6,11 +8,51 @@
         align-items: center;
         font-weight: 700;
         font-size: 1.8rem;
+
+        @media (max-width: 767px) {
+            font-size: 1.4rem;
+        }
     }
 
     &__item {
         &:not(:last-child) {
             margin-right: 25px;
+
+            @media (max-width: 767px) {
+                margin-right: 12px;
+            }
+        }
+    }
+
+    &__link {
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background-color: var(--clr-default-100);
+            transform: translateX(-50%);
+            transition: width $ms;
+        }
+
+        &--active {
+            &::before {
+                width: 100%;
+            }
+        }
+
+        @media (hover) {
+            &:hover,
+            &:focus {
+                &::before {
+                    width: 100%;
+                    transition: width $ms;
+                }
+            }
         }
     }
 }

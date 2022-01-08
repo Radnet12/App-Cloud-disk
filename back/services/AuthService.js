@@ -24,10 +24,22 @@ class AuthService {
         const hashedPassword = await bcrypt.hash(password, 8);
 
         // Saving to DB
-        const newUser = new UserModel({ email, password: hashedPassword });
-        await newUser.save();
+        const newUser = await UserModel.create({
+            email,
+            password: hashedPassword,
+        });
 
-        return newUser;
+        // Generating JWT
+        const token = jwt.sign(
+            { id: newUser.id },
+            process.env.JWT_ACCESS_SECRET_KEY,
+            { expiresIn: "1h" }
+        );
+
+        // Excluding from user password field
+        const userDto = new UserDto(newUser);
+
+        return { token, user: userDto };
     }
 
     async login(email, password) {
@@ -48,6 +60,23 @@ class AuthService {
         if (!isPasswordEqual) {
             throw ApiError.BadRequest("Неправильный пароль!");
         }
+
+        // Generating JWT
+        const token = jwt.sign(
+            { id: user.id },
+            process.env.JWT_ACCESS_SECRET_KEY,
+            { expiresIn: "1h" }
+        );
+
+        // Excluding from user password field
+        const userDto = new UserDto(user);
+
+        return { token, user: userDto };
+    }
+
+    async authentication(id) {
+        // Checking if such email is already exists or not
+        const user = await UserModel.findOne({ _id: id });
 
         // Generating JWT
         const token = jwt.sign(

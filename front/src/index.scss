@@ -5,9 +5,11 @@
     --clr-default-100: #fff;
     --clr-default-900: #000;
     --clr-primary-400: #0c306b;
+    --clr-secondary-300: #cfdcf1;
     --clr-secondary-400: #98a9c3;
     --clr-ui-header: #242424;
     --clr-ui-background: #1f1f1f;
+    --clr-ui-error: #c22828;
 }
 
 body {
@@ -33,5 +35,10 @@ main {
     flex-grow: 1;
 }
 
-
+// Components
+@import "./styles/ui.scss";
 @import "./styles/components/auth.scss";
+@import "./styles/components/form.scss";
+
+// Libs
+@import "./styles/libs/toastify.scss";

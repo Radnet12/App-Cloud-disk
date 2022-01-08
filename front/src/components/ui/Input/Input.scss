@@ -1,0 +1,37 @@
+@import "../../../styles/variables.scss";
+
+.form__input {
+    input {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border: 1px solid var(--clr-secondary-400);
+        border-radius: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+        min-height: 40px;
+        color: var(--clr-default-900);
+        background-color: transparent;
+        transition: border-color $ms;
+
+        &::placeholder {
+            color: var(--clr-secondary-300);
+        }
+
+        &:hover,
+        &:focus {
+            border-color: var(--clr-primary-400);
+            transition: border-color $ms;
+        }
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 15px;
+    }
+
+    &-error {
+        margin-top: 5px;
+        color: var(--clr-ui-error);
+    }
+}

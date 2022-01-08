@@ -10,4 +10,6 @@ export type UserType = {
 export type UserReducerState = {
     user: UserType;
     isAuth: boolean;
+    isFetchError: string | null;
+    isLoading: boolean;
 };

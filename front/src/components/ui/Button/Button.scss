@@ -1,0 +1,59 @@
+@import "../../../styles/variables.scss";
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: fit-content;
+    min-height: 40px;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--clr-default-100);
+    background-color: var(--clr-primary-400);
+    transition: box-shadow $ms;
+
+    &__size {
+        &--small {
+            min-width: 120px;
+        }
+
+        &--full {
+            width: 100%;
+        }
+
+        &--large {
+            min-width: 220px;
+        }
+
+        &--middle {
+            min-width: 180px;
+        }
+    }
+
+    &__position {
+        &--left {
+            margin-right: auto;
+        }
+
+        &--right {
+            margin-left: auto;
+        }
+
+        &--center {
+            margin-right: auto;
+            margin-left: auto;
+        }
+    }
+
+    @media (hover) {
+        &:hover,
+        &:focus {
+            box-shadow: 0 6px 10px rgba(12, 48, 107, 0.35);
+            transition: box-shadow $ms;
+        }
+    }
+}
