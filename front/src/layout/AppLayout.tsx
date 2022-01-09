@@ -9,10 +9,11 @@ import { ToastContainer, toast } from "react-toastify";
 
 // Components
 import { Header } from "../components/common/Header/Header";
+import { Loader } from "../components/ui/Loader/Loader";
 
 export const AppLayout: React.FC = () => {
     // **Redux state
-    const { isFetchError } = useTypedSelector((state) => state.user);
+    const { isFetchError, isLoading } = useTypedSelector((state) => state.user);
 
     // HandlingError
     useEffect(() => {
@@ -27,9 +28,7 @@ export const AppLayout: React.FC = () => {
         <>
             <div className="wrapper">
                 <Header />
-                <main>
-                    <Outlet />
-                </main>
+                <main>{isLoading ? <Loader fixed /> : <Outlet />}</main>
             </div>
             <ToastContainer />
         </>

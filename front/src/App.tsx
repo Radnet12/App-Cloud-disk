@@ -11,7 +11,9 @@ export const App: React.FC = () => {
     const { authorization } = useDispatchedAction();
 
     useEffect(() => {
-        authorization();
+        if (localStorage.getItem("token")) {
+            authorization();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

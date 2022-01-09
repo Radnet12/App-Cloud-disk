@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 
 // Redux
@@ -10,6 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 
 // Components
 import { App } from "./App";
+import { Loader } from "./components/ui/Loader/Loader";
 
 // Styles
 import "./index.scss";
@@ -17,9 +18,11 @@ import "./index.scss";
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={setupStore()}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
+            <Suspense fallback={<Loader fixed/>}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </Suspense>
         </Provider>
     </React.StrictMode>,
     document.getElementById("root")

@@ -2,7 +2,7 @@
 import { Container } from "../../components/ui/Container/Container";
 import { RegistrationForm } from "./components/RegistrationForm/RegistrationForm";
 
-export const RegistrationPage: React.FC = () => {
+const RegistrationPage: React.FC = () => {
     return (
         <section className="auth">
             <Container>
@@ -10,9 +10,11 @@ export const RegistrationPage: React.FC = () => {
                     <h1 className="section__title section__title--centered">
                         Регистрация
                     </h1>
-                    <RegistrationForm/>
+                    <RegistrationForm />
                 </div>
             </Container>
         </section>
     );
 };
+
+export default RegistrationPage;

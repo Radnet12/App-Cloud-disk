@@ -4,7 +4,7 @@ import React from "react";
 import { Container } from "../../components/ui/Container/Container";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 
-export const LoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
     return (
         <section className="auth">
             <Container>
@@ -18,3 +18,5 @@ export const LoginPage: React.FC = () => {
         </section>
     );
 };
+
+export default LoginPage;

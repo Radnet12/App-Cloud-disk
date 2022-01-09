@@ -1,18 +1,19 @@
+import { lazy } from "react";
+
 // Types
 import { Route } from "../models/Route";
-import { LoginPage } from "../pages/LoginPage/LoginPage";
-import { RegistrationPage } from "../pages/RegistrationPage/RegistrationPage";
 import { RouteNames } from "./RouteNames";
 
-// Components
 
 export const AuthRoutes: Route[] = [
     {
         path: RouteNames.LOGIN,
-        component: LoginPage,
+        component: lazy(() => import("../pages/LoginPage/LoginPage")),
     },
     {
         path: RouteNames.REGISTRATION,
-        component: RegistrationPage,
+        component: lazy(
+            () => import("../pages/RegistrationPage/RegistrationPage")
+        ),
     },
 ];

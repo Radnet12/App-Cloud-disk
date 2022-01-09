@@ -27,10 +27,6 @@ export class AuthService {
     }
 
     static authorization(): Promise<AxiosResponse<AuthResponse>> {
-        return $api.get<AuthResponse>("/auth/authorization", {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+        return $api.get<AuthResponse>("/auth/authorization");
     }
 }
