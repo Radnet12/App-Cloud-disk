@@ -2,9 +2,11 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 // Reducers
 import UserReducer from "./reducers/UserReducer/UserReducer";
+import FileReducer from "./reducers/FileReducer/FileReducer";
 
 const rootReducer = combineReducers({
-    user: UserReducer
+    user: UserReducer,
+    file: FileReducer,
 });
 
 export const setupStore = () => {
@@ -12,7 +14,6 @@ export const setupStore = () => {
         reducer: rootReducer,
     });
 };
-
 
 // Получаем ТИП rootReducer через нативную функцию typeScript ReturnType
 export type RootState = ReturnType<typeof rootReducer>;

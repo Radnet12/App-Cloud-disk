@@ -13,16 +13,17 @@ import { Loader } from "../components/ui/Loader/Loader";
 
 export const AppLayout: React.FC = () => {
     // **Redux state
-    const { isFetchError, isLoading } = useTypedSelector((state) => state.user);
+    const { isFetchError: isUserFetchError, isLoading } = useTypedSelector((state) => state.user);
+    const { isFetchError: isFileFetchError } = useTypedSelector((state) => state.file);
 
     // HandlingError
     useEffect(() => {
-        if (isFetchError) {
-            toast.error(isFetchError, {
-                toastId: 1
+        if (isUserFetchError || isFileFetchError) {
+            toast.error(isUserFetchError || isFileFetchError, {
+                toastId: 1,
             });
         }
-    }, [isFetchError]);
+    }, [isUserFetchError, isFileFetchError]);
 
     return (
         <>

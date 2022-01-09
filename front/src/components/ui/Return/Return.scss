@@ -1,0 +1,16 @@
+@import "../../../styles/variables.scss";
+
+.return-btn {
+    svg {
+        stroke: var(--color);
+        transition: stroke $ms;
+
+        @media (hover) {
+            &:hover,
+            &:focus {
+                stroke: var(--hoverColor);
+                transition: stroke $ms;
+            }
+        }
+    }
+}

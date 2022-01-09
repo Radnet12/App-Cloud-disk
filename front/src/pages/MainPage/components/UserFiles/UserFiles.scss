@@ -1,0 +1,27 @@
+.user-files {
+    &__head {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr 7fr repeat(4, 1fr);
+        border-bottom: 1px solid var(--clr-secondary-500);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 1.4rem;
+        color: var(--clr-secondary-200);
+
+        &-item {
+            &--name {
+                grid-column-start: 2;
+            }
+
+            &--date {
+                grid-column-start: 5;
+                text-align: center;
+            }
+
+            &--size {
+                text-align: center;
+            }
+        }
+    }
+}

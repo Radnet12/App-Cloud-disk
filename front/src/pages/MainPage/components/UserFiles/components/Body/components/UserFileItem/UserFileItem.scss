@@ -1,0 +1,30 @@
+.file-item {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 7fr repeat(4, 1fr);
+    align-items: center;
+    border-bottom: 1px solid var(--clr-secondary-500);
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &--empty {
+        display: block;
+        border-bottom: none;
+        text-align: center;
+    }
+
+    &__image {
+        text-align: center;
+    }
+
+    &__date {
+        grid-column-start: 5;
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    &__size {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+}

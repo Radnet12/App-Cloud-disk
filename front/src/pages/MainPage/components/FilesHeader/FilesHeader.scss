@@ -1,0 +1,38 @@
+@import "../../../../styles/variables.scss";
+
+.files-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+
+    &__left {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    &__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+        border: 1px solid var(--color);
+        border-radius: 14px;
+        padding-left: 10px;
+        padding-right: 10px;
+        min-height: 35px;
+        font-size: 1.4rem;
+        color: var(--color);
+        transition: color $ms, border-color $ms;
+
+        @media (hover) {
+            &:hover,
+            &:focus {
+                border-color: var(--hoverColor);
+                color: var(--hoverColor);
+                transition: color $ms, border-color $ms;
+            }
+        }
+    }
+}

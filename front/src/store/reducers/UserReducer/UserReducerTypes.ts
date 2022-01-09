@@ -4,7 +4,6 @@ export type UserType = {
     diskSpace: number;
     usedSpace: number;
     avatar: string;
-    files: string[];
 };
 
 export type UserReducerState = {

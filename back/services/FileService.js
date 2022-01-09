@@ -7,6 +7,9 @@ const FileModel = require("../models/FileModel");
 // Exceptions
 const ApiError = require("../exceptions/ApiError");
 
+// DTO
+const FileDto = require("../dtos/FileDto");
+
 class FileService {
     createDir(file) {
         // Creating path to file
@@ -35,7 +38,9 @@ class FileService {
                 parent: parentId,
             });
 
-            return files;
+            const filesDto = files.map((file) => new FileDto(file));
+
+            return filesDto;
         } catch (e) {
             console.log("Ошибка при получении файлов: ", e);
             return ApiError.BadRequest("Не удалось получить файлы");

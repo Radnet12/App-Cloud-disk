@@ -4,7 +4,6 @@ module.exports = class UserDto {
     diskSpace;
     usedSpace;
     avatar;
-    files;
 
     constructor(user) {
         this.id = user._id;
@@ -12,6 +11,5 @@ module.exports = class UserDto {
         this.diskSpace = user.diskSpace;
         this.usedSpace = user.usedSpace;
         this.avatar = user.avatar;
-        this.files = user.files;
     }
 };
