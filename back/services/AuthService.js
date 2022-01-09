@@ -8,6 +8,10 @@ const UserDto = require("../dtos/UserDto");
 
 // Models
 const UserModel = require("../models/UserModel");
+const FileModel = require("../models/FileModel");
+
+// Services
+const FileService = require("./FileService");
 
 class AuthService {
     async registration(email, password) {
@@ -28,6 +32,11 @@ class AuthService {
             email,
             password: hashedPassword,
         });
+
+        // Creating dir for user
+        await FileService.createDir(
+            new FileModel({ user: newUser.id, name: "" })
+        );
 
         // Generating JWT
         const token = jwt.sign(

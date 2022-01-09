@@ -7,6 +7,7 @@ const ErrorMiddleware = require("./middlewares/ErrorMiddleware");
 
 // Routes
 const AuthRoutes = require("./routes/AuthRoutes");
+const FileRoutes = require("./routes/FileRoutes");
 
 const PORT = process.env.PORT || 5001;
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // routes
 app.use("/api/auth", AuthRoutes);
+app.use("/api/files", FileRoutes);
 
 // ErrorMiddleware
 app.use(ErrorMiddleware);
