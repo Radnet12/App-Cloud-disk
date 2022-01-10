@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 // Redux
 import { useDispatchedAction } from "../../../../hooks/useDispatchedActions";
@@ -19,11 +19,21 @@ export const FilesHeader: React.FC = () => {
     // **Local state
     const [isModalVisible, setIsModalVisile] = useState<boolean>(false);
 
+    // **Ref
+    const inputRef = useRef<HTMLInputElement>(null!);
+
     // Dispatch
     const { createDir } = useDispatchedAction();
 
-    const createDirHandler = () => {
-        createDir({ name: "апавпвап", parent: currentDir, type: "dir" });
+    const createDirHandler = (): void => {
+        if (inputRef.current?.value.length > 0) {
+            createDir({
+                name: inputRef.current.value,
+                parent: currentDir,
+                type: "dir",
+            });
+            setIsModalVisile(false);
+        }
     };
 
     return (
@@ -55,11 +65,10 @@ export const FilesHeader: React.FC = () => {
                 footerCancelBtnText="Отменить создание"
                 footerSubmitBtnText="Создать папку"
                 visible={isModalVisible}
-                closeHandler={setIsModalVisile}
+                cancelHandler={setIsModalVisile}
+                submitHandler={createDirHandler}
             >
-                <div className="files-header__modal">
-                    <Input placeholder="Название папки..." />
-                </div>
+                <Input ref={inputRef} placeholder="Название папки..." />
             </Modal>
         </>
     );

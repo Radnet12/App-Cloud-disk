@@ -5,15 +5,15 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border-width: 2px;
+    border-style: solid;
     border-radius: 5px;
     padding: 5px 15px;
     width: fit-content;
     min-height: 40px;
     font-weight: 700;
     font-size: 1.8rem;
-    color: var(--clr-default-100);
-    background-color: var(--clr-primary-400);
-    transition: box-shadow $ms;
+    transition: color $ms, background-color $ms;
 
     &__size {
         &--small {
@@ -48,11 +48,65 @@
         }
     }
 
-    @media (hover) {
-        &:hover,
-        &:focus {
-            box-shadow: 0 6px 10px rgba(12, 48, 107, 0.35);
-            transition: box-shadow $ms;
+    &__type {
+        &--default {
+            border-color: var(--clr-primary-400);
+            color: var(--clr-default-100);
+            background-color: var(--clr-primary-400);
+
+            @media (hover) {
+                &:hover,
+                &:focus {
+                    color: var(--clr-primary-400);
+                    background-color: transparent;
+                    transition: color $ms, background-color $ms;
+                }
+            }
+        }
+
+        &--stroke {
+            border-color: var(--clr-primary-400);
+            color: var(--clr-primary-400);
+            background-color: transparent;
+
+            @media (hover) {
+                &:hover,
+                &:focus {
+                    color: var(--clr-default-100);
+                    background-color: var(--clr-primary-400);
+                    transition: color $ms, background-color $ms;
+                }
+            }
+        }
+
+        &--danger {
+            border-color: var(--clr-ui-error);
+            color: var(--clr-ui-error);
+            background-color: transparent;
+
+            @media (hover) {
+                &:hover,
+                &:focus {
+                    color: var(--clr-default-100);
+                    background-color: var(--clr-ui-error);
+                    transition: color $ms, background-color $ms;
+                }
+            }
+        }
+
+        &--error {
+            border-color: var(--clr-ui-error);
+            color: var(--clr-default-100);
+            background-color: var(--clr-ui-error);
+
+            @media (hover) {
+                &:hover,
+                &:focus {
+                    color: var(--clr-ui-error);
+                    background-color: transparent;
+                    transition: color $ms, background-color $ms;
+                }
+            }
         }
     }
 }

@@ -72,7 +72,7 @@
         }
 
         &-body {
-            padding: 30px 20px;
+            padding: 40px 20px;
         }
 
         &-footer {
@@ -83,6 +83,17 @@
             border-top: 1px solid var(--clr-secondary-400);
             padding: 12px 20px;
         }
+
+        &--has-title {
+            .modal__close {
+                right: 20px;
+                top: 18px;
+            }
+
+            .modal__content-body {
+                padding: 30px 20px;
+            }
+        }
     }
 
     &__body {
@@ -91,8 +102,8 @@
 
     &__close {
         position: absolute;
-        right: 20px;
-        top: 18px;
+        right: 7px;
+        top: 7px;
         width: 20px;
         height: 20px;
 

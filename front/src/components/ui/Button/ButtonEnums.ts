@@ -1,15 +1,3 @@
-export const PositionsEnum = {
-    LEFT: "left",
-    RIGHT: "right",
-    CENTER: "center",
-} as const;
-
-export const SizesEnum = {
-    SMALL: "small",
-    MIDDLE: "middle",
-    LARGE: "large",
-    FULL: "full",
-} as const;
-
-export type Positions = typeof PositionsEnum[keyof typeof PositionsEnum];
-export type Sizes = typeof SizesEnum[keyof typeof SizesEnum];
+export type Positions = "left" | "right" | "center";
+export type Sizes = "small" | "middle" | "large" | "full";
+export type BtnTypes = "default" | "stroke" | "danger" | "error";

@@ -18,7 +18,8 @@ type ModalProps = {
     footerSubmitBtnText?: string;
     animationDuration?: number;
     width?: number;
-    closeHandler: (state: boolean) => void;
+    submitHandler: () => void;
+    cancelHandler: (state: boolean) => void;
 };
 
 const ModalRoot = document.createElement("div");
@@ -33,7 +34,8 @@ export const Modal: React.FC<ModalProps> = (props) => {
         footerSubmitBtnText = "Подтвердить",
         animationDuration = 300,
         width = 800,
-        closeHandler,
+        submitHandler,
+        cancelHandler,
         children,
     } = props;
 
@@ -42,10 +44,13 @@ export const Modal: React.FC<ModalProps> = (props) => {
         "--width": `${width}px`,
     } as React.CSSProperties;
 
-    const closeModal = () => {
-        closeHandler(false);
+    const closeModal = (): void => {
+        cancelHandler(false);
     };
 
+    const submitModal = () => {
+        submitHandler();
+    };
 
     // Inserting and deleting modal
     useEffect(() => {
@@ -71,7 +76,11 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 >
                     <div className="modal__wrapper">
                         <div
-                            className="modal__content"
+                            className={
+                                title
+                                    ? "modal__content modal__content--has-title"
+                                    : "modal__content"
+                            }
                             onClick={(e) => e.stopPropagation()}
                         >
                             {title && (
@@ -90,6 +99,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
                                             marginTop: 5,
                                         }}
                                         onClick={closeModal}
+                                        btnType="danger"
                                     >
                                         {footerCancelBtnText}
                                     </Button>
@@ -99,6 +109,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
                                             marginBottom: 5,
                                             marginTop: 5,
                                         }}
+                                        onClick={submitModal}
                                     >
                                         {footerSubmitBtnText}
                                     </Button>

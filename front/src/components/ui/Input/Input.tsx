@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, forwardRef } from "react";
 
 // Styles
 import "./Input.scss";
@@ -7,16 +7,18 @@ type FormInputProps = {
     labelText?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export const Input: React.FC<FormInputProps> = (props) => {
-    // **Props
-    const { labelText, ...rest } = props;
+export const Input = forwardRef<HTMLInputElement, FormInputProps>(
+    (props, ref) => {
+        // **Props
+        const { labelText, ...rest } = props;
 
-    return (
-        <div className="input">
-            <label>
-                {labelText && <span>{labelText}</span>}
-                <input {...rest} />
-            </label>
-        </div>
-    );
-};
+        return (
+            <div className="input">
+                <label>
+                    {labelText && <span>{labelText}</span>}
+                    <input ref={ref} {...rest} />
+                </label>
+            </div>
+        );
+    }
+);

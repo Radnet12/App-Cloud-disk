@@ -10,7 +10,6 @@ const FileService = require("../services/FileService");
 // Dtos
 const FileDto = require("../dtos/FileDto");
 
-
 class FileController {
     async createDir(req, res, next) {
         try {

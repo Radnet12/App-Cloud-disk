@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 
 // Types
-import { Positions, PositionsEnum, Sizes, SizesEnum } from "./ButtonEnums";
+import { Positions, Sizes, BtnTypes } from "./ButtonEnums";
 
 // Style
 import "./Button.scss";
@@ -9,13 +9,15 @@ import "./Button.scss";
 type ButtonProps = {
     size?: Sizes;
     position?: Positions;
+    btnType?: BtnTypes;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button: React.FC<ButtonProps> = (props) => {
     // **Props
     const {
-        size = SizesEnum.SMALL,
+        size = "small",
         position,
+        btnType = "default",
         className,
         children,
         ...rest
@@ -25,15 +27,15 @@ export const Button: React.FC<ButtonProps> = (props) => {
         let className = "btn";
 
         switch (position) {
-            case PositionsEnum.LEFT: {
+            case "left": {
                 className += " btn__position--left";
                 break;
             }
-            case PositionsEnum.RIGHT: {
+            case "right": {
                 className += " btn__position--right";
                 break;
             }
-            case PositionsEnum.CENTER: {
+            case "center": {
                 className += " btn__position--center";
                 break;
             }
@@ -43,19 +45,19 @@ export const Button: React.FC<ButtonProps> = (props) => {
         }
 
         switch (size) {
-            case SizesEnum.SMALL: {
+            case "small": {
                 className += " btn__size--small";
                 break;
             }
-            case SizesEnum.MIDDLE: {
+            case "middle": {
                 className += " btn__size--middle";
                 break;
             }
-            case SizesEnum.LARGE: {
+            case "large": {
                 className += " btn__size--large";
                 break;
             }
-            case SizesEnum.FULL: {
+            case "full": {
                 className += " btn__size--full";
                 break;
             }
@@ -63,6 +65,26 @@ export const Button: React.FC<ButtonProps> = (props) => {
                 break;
             }
         }
+
+        switch (btnType) {
+            case "danger": {
+                className += " btn__type--danger";
+                break;
+            }
+            case "error": {
+                className += " btn__type--error";
+                break;
+            }
+            case "stroke": {
+                className += " btn__type--stroke";
+                break;
+            }
+            default: {
+                className += " btn__type--default";
+                break;
+            }
+        }
+
         return className;
     };
 
