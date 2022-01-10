@@ -8,11 +8,9 @@ import { useDispatchedAction } from "../../../../../../hooks/useDispatchedAction
 import { Loader } from "../../../../../../components/ui/Loader/Loader";
 import { UserFileList } from "./components/UserFilesList/UserFileList";
 
-export const Body: React.FC = () => {
+export const UserFilesBody: React.FC = () => {
     // **Redux state
-    const { currentDir, isLoading } = useTypedSelector(
-        (state) => state.file
-    );
+    const { currentDir, isLoading } = useTypedSelector((state) => state.file);
 
     // Dispatch
     const { getFiles } = useDispatchedAction();

@@ -1,15 +1,17 @@
 import React from "react";
 
 // Components
-import { Head } from "./components/Head/Head";
-import { Body } from "./components/Body/Body";
+import { UserFilesHead } from "./components/UserFilesHead/UserFilesHead";
+import { UserFilesBody } from "./components/UserFilesBody/UserFilesBody";
 
 // Styles
 import "./UserFiles.scss";
 
 export const UserFiles: React.FC = () => {
-    return <div className="user-files">
-        <Head />
-        <Body />
-    </div>;
+    return (
+        <div className="user-files">
+            <UserFilesHead />
+            <UserFilesBody />
+        </div>
+    );
 };

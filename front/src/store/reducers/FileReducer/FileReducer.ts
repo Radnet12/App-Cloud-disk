@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FileReducerState, FileType } from "./FileReducerTypes";
 
 // Thunks
-import { getFiles } from "./FileReducerThunk";
+import { getFiles, createDir } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
     files: [],
@@ -29,15 +29,23 @@ const FileReducer = createSlice({
             state.files = action.payload;
             state.isLoading = false;
         },
-        [getFiles.rejected.type]: (
-            state,
-            action: PayloadAction<string>
-        ) => {
+        [getFiles.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isFetchError = action.payload;
             state.isLoading = false;
+        },
+
+        [createDir.fulfilled.type]: (
+            state,
+            action: PayloadAction<FileType>
+        ) => {
+            state.isFetchError = null;
+            state.files = [...state.files, action.payload];
+        },
+        [createDir.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isFetchError = action.payload;
         },
     },
 });
 
-export const FileReducerActions = { ...FileReducer.actions, getFiles };
+export const FileReducerActions = { ...FileReducer.actions, getFiles, createDir };
 export default FileReducer.reducer;

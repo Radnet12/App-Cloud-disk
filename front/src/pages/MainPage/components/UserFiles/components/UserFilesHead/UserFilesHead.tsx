@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Head: React.FC = () => {
+export const UserFilesHead: React.FC = () => {
     return (
         <div className="user-files__head">
             <div className="user-files__head-item user-files__head-item--name">

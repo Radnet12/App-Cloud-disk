@@ -13,4 +13,12 @@ export class FileService {
     ): Promise<AxiosResponse<FileType[]>> {
         return $api.get("/files", { params: { id: folderId } });
     }
+
+    static createDir(name: string, parent: string | null, type = "dir"): Promise<AxiosResponse<FileType>> {
+        return $api.post("/files/create", {
+            name,
+            parent,
+            type
+        });
+    }
 }

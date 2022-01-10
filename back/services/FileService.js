@@ -22,7 +22,9 @@ class FileService {
                     fs.mkdirSync(filePath);
                     return resolve({ message: "Папка была создана успешно!" });
                 } else {
-                    return reject({ message: "Данная папка уже существует!" });
+                    return reject(
+                        ApiError.BadRequest("Данная папка уже существует!")
+                    );
                 }
             } catch (e) {
                 console.log("Ошибка при создании папки: ", e);

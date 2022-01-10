@@ -7,6 +7,10 @@ const FileModel = require("../models/FileModel");
 // Services
 const FileService = require("../services/FileService");
 
+// Dtos
+const FileDto = require("../dtos/FileDto");
+
+
 class FileController {
     async createDir(req, res, next) {
         try {
@@ -39,7 +43,10 @@ class FileController {
 
             // saving file to DB
             await file.save();
-            return res.json(file);
+
+            const fileDto = new FileDto(file);
+
+            return res.json(fileDto);
         } catch (e) {
             next(e);
         }

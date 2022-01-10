@@ -7,7 +7,7 @@ export type FileType = {
     size: number;
     path: string;
     user: string;
-    parent: string;
+    parent: string | null;
     children: string[]
 };
 
