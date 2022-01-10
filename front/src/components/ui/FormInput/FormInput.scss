@@ -1,8 +1,6 @@
 @import "../../../styles/variables.scss";
 
-.input {
-    color: var(--clr-default-900);
-
+.form__input {
     input {
         display: flex;
         align-items: center;
@@ -13,7 +11,7 @@
         padding-right: 10px;
         width: 100%;
         min-height: 40px;
-        color: inherit;
+        color: var(--clr-default-900);
         background-color: transparent;
         transition: border-color $ms;
 
@@ -28,12 +26,12 @@
         }
     }
 
-    span {
-        display: block;
-        margin-bottom: 8px;
-    }
-
     &:not(:last-child) {
         margin-bottom: 15px;
+    }
+
+    &-error {
+        margin-top: 5px;
+        color: var(--clr-ui-error);
     }
 }

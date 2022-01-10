@@ -8,7 +8,7 @@ import { useForm, FormProvider } from "react-hook-form";
 
 // Componets
 import { Button } from "../../../../components/ui/Button/Button";
-import { Input } from "../../../../components/ui/Input/Input";
+import { FormInput } from "../../../../components/ui/FormInput/FormInput";
 
 // Types
 import { FormAuth } from "../../../../models/FormAuth";
@@ -30,13 +30,13 @@ export const RegistrationForm: React.FC = () => {
     return (
         <FormProvider {...methods}>
             <form className="form" onSubmit={onSubmit}>
-                <Input
+                <FormInput
                     type="email"
                     name="email"
                     placeholder="Введите почту"
                     rules={{ ...formRules.required("Заполните поле!") }}
                 />
-                <Input
+                <FormInput
                     type="password"
                     name="password"
                     placeholder="Введите пароль"
