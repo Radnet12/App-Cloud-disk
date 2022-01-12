@@ -11,7 +11,7 @@ type ReturnProps = {
 
 export const Return: React.FC<ReturnProps> = (props) => {
     // **Props
-    const { color, hoverColor, className, ...rest } = props;
+    const { color, hoverColor, handler, className, ...rest } = props;
 
     // Styles
     const styles = {
@@ -23,6 +23,7 @@ export const Return: React.FC<ReturnProps> = (props) => {
         <button
             style={styles}
             className={className ? `return-btn ${className}` : "return-btn"}
+            onClick={handler}
             {...rest}
         >
             <svg

@@ -8,6 +8,7 @@
     border-bottom: 1px solid var(--clr-secondary-500);
     padding-top: 10px;
     padding-bottom: 10px;
+    cursor: pointer;
 
     &:not(.file-item--empty) {
         @media (hover) {

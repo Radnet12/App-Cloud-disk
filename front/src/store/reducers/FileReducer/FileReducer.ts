@@ -10,13 +10,24 @@ const initialState: FileReducerState = {
     files: [],
     isLoading: false,
     isFetchError: null,
-    currentDir: null
+    currentDir: null,
+    dirStack: [],
 };
 
 const FileReducer = createSlice({
     name: "file",
     initialState,
-    reducers: {},
+    reducers: {
+        setCurrentDir: (state, action: PayloadAction<string | null>) => {
+            state.currentDir = action.payload;
+        },
+        pushToDirStack: (state, action: PayloadAction<string | null>) => {
+            state.dirStack.push(action.payload);
+        },
+        popFromDirStack: (state) => {
+            state.dirStack.pop();
+        },
+    },
     extraReducers: {
         [getFiles.pending.type]: (state) => {
             state.isLoading = true;
@@ -47,5 +58,9 @@ const FileReducer = createSlice({
     },
 });
 
-export const FileReducerActions = { ...FileReducer.actions, getFiles, createDir };
+export const FileReducerActions = {
+    ...FileReducer.actions,
+    getFiles,
+    createDir,
+};
 export default FileReducer.reducer;

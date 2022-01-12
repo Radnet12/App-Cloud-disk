@@ -16,4 +16,5 @@ export type FileReducerState = {
     isLoading: boolean;
     isFetchError: string | null;
     currentDir: string | null;
+    dirStack: Array<string | null>
 };

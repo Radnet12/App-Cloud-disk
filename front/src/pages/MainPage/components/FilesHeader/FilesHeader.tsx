@@ -14,7 +14,7 @@ import { Input } from "../../../../components/ui/Input/Input";
 
 export const FilesHeader: React.FC = () => {
     // **Redux state
-    const { currentDir } = useTypedSelector((state) => state.file);
+    const { currentDir, dirStack } = useTypedSelector((state) => state.file);
 
     // **Local state
     const [isModalVisible, setIsModalVisile] = useState<boolean>(false);
@@ -23,7 +23,7 @@ export const FilesHeader: React.FC = () => {
     const inputRef = useRef<HTMLInputElement>(null!);
 
     // Dispatch
-    const { createDir } = useDispatchedAction();
+    const { createDir, popFromDirStack, setCurrentDir } = useDispatchedAction();
 
     const createDirHandler = (): void => {
         if (inputRef.current?.value.length > 0) {
@@ -36,6 +36,13 @@ export const FilesHeader: React.FC = () => {
         }
     };
 
+    const returnToPreviousFolder = (): void => {
+        if (dirStack.length > 0) {
+            setCurrentDir(dirStack[dirStack.length - 1]);
+            popFromDirStack();
+        }
+    };
+
     return (
         <>
             <div className="files-header">
@@ -43,6 +50,7 @@ export const FilesHeader: React.FC = () => {
                     <Return
                         color="var(--clr-default-100)"
                         hoverColor="var(--clr-secondary-400)"
+                        handler={returnToPreviousFolder}
                     />
                     <button
                         className="files-header__btn"
