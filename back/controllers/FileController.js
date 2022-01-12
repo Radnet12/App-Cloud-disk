@@ -60,6 +60,20 @@ class FileController {
             next(e);
         }
     }
+
+    async uploadFile(req, res, next) {
+        try {
+            const file = await FileService.uploadFile(
+                req.files.file,
+                req.user.id,
+                req.body.parent
+            );
+
+            return res.json(file);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new FileController();
