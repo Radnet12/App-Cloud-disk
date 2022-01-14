@@ -46,81 +46,74 @@ class FileService {
             return filesDto;
         } catch (e) {
             console.log("Ошибка при получении файлов: ", e);
-            return ApiError.BadRequest("Не удалось получить файлы");
+            throw ApiError.BadRequest("Не удалось получить файлы");
         }
     }
 
     async uploadFile(file, userId, parentId) {
-        try {
-            // Finding dir accoring to UserId and dirId
-            const parent = await FileModel.findOne({
-                user: userId,
-                _id: parentId,
-            });
+        // Finding dir accoring to UserId and dirId
+        const parent = await FileModel.findOne({
+            user: userId,
+            _id: parentId,
+        });
 
-            // Finding user
-            const user = await UserModel.findOne({ _id: userId });
+        // Finding user
+        const user = await UserModel.findById(userId);
 
-            // Checking for empty space
-            if (user.usedSpace + file.size > user.diskSpace) {
-                return ApiError.BadRequest(
-                    "Недостаточно места на Вашем хранилище!"
-                );
-            }
-
-            // Adding size to existing one
-            user.usedSpace = user.usedSpace + file.size;
-
-            // Getting path
-            let path;
-
-            // If parent dir exist create file in this dir
-            if (parent) {
-                // path = path.join(filePath, userId, parent.path, file.name);
-                path = this.#returnFilePath(userId, parent.path, file.name);
-            } else {
-                // path = path.join(filePath, userId, file.name);
-                path = this.#returnFilePath(userId, file.name);
-            }
-
-            // Checking if such dir already exist
-            if (fs.existsSync(path)) {
-                return ApiError.BadRequest("Файл уже существует!");
-            }
-
-            // Moving file to cloud
-            file.mv(path);
-
-            // Getting file type
-            const fileType = file.name.split(".").pop();
-
-            // Creting new file
-            const fileModel = new FileModel({
-                name: file.name,
-                type: fileType,
-                size: file.size,
-                path: parent?.path,
-                parent: parent?._id,
-                user: user._id,
-            });
-
-            // Saving to DB
-            await fileModel.save();
-            await user.save();
-
-            // Getting file from DB
-            const fileModelFromDB = await FileModel.findOne({
-                name: file.name,
-                type: fileType,
-            });
-
-            const fileDto = new FileDto(fileModelFromDB);
-
-            return fileDto;
-        } catch (e) {
-            console.log("Ошибка при загрузки файла: ", e);
-            return ApiError.BadRequest("Не удалось загрузить файл");
+        // Checking for empty space
+        if (user.usedSpace + file.size > user.diskSpace) {
+            throw ApiError.BadRequest("Недостаточно места на Вашем хранилище!");
         }
+
+        // Adding size to existing one
+        user.usedSpace = user.usedSpace + file.size;
+
+        // Getting path
+        let path;
+
+        // If parent dir exist create file in this dir
+        if (parent) {
+            // path = path.join(filePath, userId, parent.path, file.name);
+            path = this.#returnFilePath(userId, parent.path, file.name);
+        } else {
+            // path = path.join(filePath, userId, file.name);
+            path = this.#returnFilePath(userId, file.name);
+        }
+
+        // Checking if such dir already exist
+        if (fs.existsSync(path)) {
+            throw ApiError.BadRequest(`Файл "${file.name}" уже существует!`);
+        }
+
+        // Moving file to cloud
+        await file.mv(path);
+
+        // Getting file type
+        const fileType = file.name.split(".").pop();
+
+        // Creting new file
+        const fileModel = new FileModel({
+            name: file.name,
+            type: fileType,
+            size: file.size,
+            path: parent?.path,
+            parent: parent?._id,
+            user: user._id,
+        });
+
+        // Saving to DB
+        await fileModel.save();
+        await user.save();
+
+        // Getting file from DB
+        const fileModelFromDB = await FileModel.findOne({
+            name: file.name,
+            type: fileType,
+        });
+
+        const fileDto = new FileDto(fileModelFromDB);
+
+        return fileDto;
     }
 
     #returnFilePath(userId, ...rest) {

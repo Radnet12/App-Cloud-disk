@@ -1,34 +1,20 @@
-@import "../../../../styles/variables.scss";
+@import "../../../styles/variables.scss";
 
-.files-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 25px;
-
-    &__left {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-
-        &-row {
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    &__btn {
+.file-upload {
+    label {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 15px;
-        border: 1px solid var(--color);
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border: 1px dashed var(--color);
         border-radius: 14px;
         padding-left: 10px;
         padding-right: 10px;
         min-height: 35px;
         font-size: 1.4rem;
         color: var(--color);
+        cursor: pointer;
         transition: color $ms, border-color $ms;
 
         @media (hover) {
@@ -39,5 +25,13 @@
                 transition: color $ms, border-color $ms;
             }
         }
+    }
+
+    input {
+        position: absolute;
+        overflow: hidden;
+        width: 1px;
+        height: 1px;
+        clip: rect(0 0 0 0);
     }
 }

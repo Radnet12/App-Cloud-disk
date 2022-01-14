@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FileReducerState, FileType } from "./FileReducerTypes";
 
 // Thunks
-import { getFiles, createDir } from "./FileReducerThunk";
+import { getFiles, createDir, uploadFile } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
     files: [],
     isLoading: false,
+    isFileUploading: false,
+    isFileUploadError: null,
     isFetchError: null,
     currentDir: null,
     dirStack: [],
@@ -55,6 +57,22 @@ const FileReducer = createSlice({
         [createDir.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isFetchError = action.payload;
         },
+
+        [uploadFile.pending.type]: (state) => {
+            state.isFileUploading = true;
+        },
+        [uploadFile.fulfilled.type]: (
+            state,
+            action: PayloadAction<FileType>
+        ) => {
+            state.isFileUploadError = null;
+            state.files.push(action.payload);
+            state.isFileUploading = false;
+        },
+        [uploadFile.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isFileUploadError = action.payload;
+            state.isFileUploading = false;
+        },
     },
 });
 
@@ -62,5 +80,6 @@ export const FileReducerActions = {
     ...FileReducer.actions,
     getFiles,
     createDir,
+    uploadFile,
 };
 export default FileReducer.reducer;

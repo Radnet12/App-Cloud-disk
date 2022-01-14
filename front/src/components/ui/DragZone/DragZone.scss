@@ -1,0 +1,9 @@
+.drag-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--clr-default-100);
+    height: calc(100vh - 80px - 54px);
+    min-height: 300px;
+    font-size: 2.5rem;
+}

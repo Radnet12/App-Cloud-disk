@@ -23,6 +23,7 @@ module.exports = (req, res, next) => {
             process.env.JWT_ACCESS_SECRET_KEY
         );
 
+
         // adding to request
         req.user = decodedToken;
         next();

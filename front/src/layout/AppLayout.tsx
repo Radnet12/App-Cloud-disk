@@ -13,17 +13,20 @@ import { Loader } from "../components/ui/Loader/Loader";
 
 export const AppLayout: React.FC = () => {
     // **Redux state
-    const { isFetchError: isUserFetchError, isLoading } = useTypedSelector((state) => state.user);
-    const { isFetchError: isFileFetchError } = useTypedSelector((state) => state.file);
+    const { isFetchError: isUserFetchError, isLoading } = useTypedSelector(
+        (state) => state.user
+    );
+    const { isFetchError: isFileFetchError, isFileUploadError } =
+        useTypedSelector((state) => state.file);
 
     // HandlingError
     useEffect(() => {
-        if (isUserFetchError || isFileFetchError) {
-            toast.error(isUserFetchError || isFileFetchError, {
-                toastId: 1,
-            });
+        if (isUserFetchError || isFileFetchError || isFileUploadError) {
+            toast.error(
+                isUserFetchError || isFileFetchError || isFileUploadError
+            );
         }
-    }, [isUserFetchError, isFileFetchError]);
+    }, [isUserFetchError, isFileFetchError, isFileUploadError]);
 
     return (
         <>
@@ -31,7 +34,15 @@ export const AppLayout: React.FC = () => {
                 <Header />
                 <main>{isLoading ? <Loader fixed /> : <Outlet />}</main>
             </div>
-            <ToastContainer />
+            <ToastContainer
+                closeOnClick={false}
+                hideProgressBar={true}
+                autoClose={6000}
+                pauseOnHover={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                limit={3}
+            />
         </>
     );
 };

@@ -1,6 +1,10 @@
 @import "../../../styles/variables.scss";
 
 .return-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     svg {
         stroke: var(--color);
         transition: stroke $ms;

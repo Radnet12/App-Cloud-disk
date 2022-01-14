@@ -30,7 +30,7 @@ export const Router: React.FC = () => {
             <Route
                 key="no-match"
                 path="*"
-                element={<Navigate to={RouteNames.LOGIN} />}
+                element={<Navigate to={RouteNames.LOGIN} replace />}
             />,
         ];
     };
@@ -47,7 +47,7 @@ export const Router: React.FC = () => {
             <Route
                 key="no-match"
                 path="*"
-                element={<Navigate to={RouteNames.MAIN} />}
+                element={<Navigate to={RouteNames.MAIN} replace />}
             />,
         ];
     };

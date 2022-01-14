@@ -1,3 +1,8 @@
+export type UploadFileType = {
+    file: File;
+    parent: string | null;
+};
+
 export type FileType = {
     id: string;
     name: string;
@@ -8,13 +13,15 @@ export type FileType = {
     path: string;
     user: string;
     parent: string | null;
-    children: string[]
+    children: string[];
 };
 
 export type FileReducerState = {
     files: FileType[];
     isLoading: boolean;
+    isFileUploading: boolean;
+    isFileUploadError: string | null;
     isFetchError: string | null;
     currentDir: string | null;
-    dirStack: Array<string | null>
+    dirStack: Array<string | null>;
 };
