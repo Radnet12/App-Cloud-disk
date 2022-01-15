@@ -192,7 +192,7 @@ class FileService {
         let files = [];
 
         files = fs.readdirSync(filePath);
-        files.forEach((file, index) => {
+        files.forEach((file) => {
             let curPath = path.join(filePath, file);
 
             if (fs.statSync(curPath).isDirectory()) {

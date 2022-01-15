@@ -49,7 +49,16 @@ export const uploadFile = createAsyncThunk(
     "file/uploadFile",
     async ({ file, parent }: UploadFileType, { rejectWithValue }) => {
         try {
-            const response = await FileService.fileUpload(file, parent);
+            const calculateProgress = (progress: number) => {
+                // CALCULATING PROGRESS
+                console.log("progress", progress);
+            };
+
+            const response = await FileService.fileUpload(
+                file,
+                parent,
+                calculateProgress
+            );
 
             if (response.status !== 200) {
                 throw response;

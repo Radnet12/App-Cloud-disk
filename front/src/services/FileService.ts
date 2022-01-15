@@ -28,7 +28,8 @@ export class FileService {
 
     static fileUpload(
         file: File,
-        parent: string | null
+        parent: string | null,
+        progressHandler: (progress: number) => void
     ): Promise<AxiosResponse<FileType>> {
         let formData = new FormData();
 
@@ -37,7 +38,25 @@ export class FileService {
             formData.append("parent", parent);
         }
 
-        return $api.post("/files/upload", formData);
+        return $api.post("/files/upload", formData, {
+            onUploadProgress: (progressEvent: any) => {
+                const totalLength: number = progressEvent.lengthComputable
+                    ? progressEvent.total
+                    : progressEvent.target.getResponseHeader(
+                          "content-length"
+                      ) ||
+                      progressEvent.target.getResponseHeader(
+                          "x-decompressed-content-length"
+                      );
+
+                if (totalLength) {
+                    let progress = Math.round(
+                        (progressEvent.loaded * 100) / totalLength
+                    );
+                    progressHandler(progress);
+                }
+            },
+        });
     }
 
     static fileDownload(id: string): Promise<AxiosResponse<Blob>> {
