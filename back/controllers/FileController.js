@@ -1,3 +1,4 @@
+const path = require("path");
 // Models
 const FileModel = require("../models/FileModel");
 
@@ -28,7 +29,7 @@ class FileController {
                 file.path = name;
                 await FileService.createDir(file);
             } else {
-                file.path = `${parentFile.path}\\${file.name}`;
+                file.path = path.join(parentFile.path, file.name);
                 await FileService.createDir(file);
 
                 // saving file to parent children field
@@ -81,6 +82,19 @@ class FileController {
             );
 
             return res.download(fileObject.path, fileObject.name);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async deleteFile(req, res, next) {
+        try {
+            const deletedFile = await FileService.deleteFile(
+                req.query.id,
+                req.user.id
+            );
+
+            return res.json(deletedFile);
         } catch (e) {
             next(e);
         }

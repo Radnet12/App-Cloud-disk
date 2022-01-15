@@ -20,15 +20,21 @@ module.exports = (req, res, next) => {
         // decoding token
         const decodedToken = jwt.verify(
             token,
-            process.env.JWT_ACCESS_SECRET_KEY
+            process.env.JWT_ACCESS_SECRET_KEY,
+            function (err, decoded) {
+                if (err) {
+                    throw err;
+                } else {
+                    return decoded;
+                }
+            }
         );
-
 
         // adding to request
         req.user = decodedToken;
         next();
     } catch (e) {
         console.log("Ошибка при авторизации: ", e);
-        return ApiError.UnauthorizedError();
+        return next(ApiError.UnauthorizedError());
     }
 };

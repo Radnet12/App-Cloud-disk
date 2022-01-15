@@ -9,11 +9,14 @@ import {
     createDir,
     uploadFile,
     downloadFile,
+    deleteFile,
 } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
     files: [],
     isLoading: false,
+    isFileDeleting: false,
+    isFileDeletingError: null,
     isFileDownloading: false,
     isFileDownloadingError: null,
     isFileUploading: false,
@@ -95,6 +98,24 @@ const FileReducer = createSlice({
             state.isFileDownloadingError = action.payload;
             state.isFileDownloading = false;
         },
+
+        [deleteFile.pending.type]: (state) => {
+            state.isFileDeleting = true;
+        },
+        [deleteFile.fulfilled.type]: (
+            state,
+            action: PayloadAction<FileType>
+        ) => {
+            state.isFileDeletingError = null;
+            state.files = state.files.filter(
+                (file) => file.id !== action.payload.id
+            );
+            state.isFileDeleting = false;
+        },
+        [deleteFile.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isFileDeletingError = action.payload;
+            state.isFileDeleting = false;
+        },
     },
 });
 
@@ -104,5 +125,6 @@ export const FileReducerActions = {
     createDir,
     uploadFile,
     downloadFile,
+    deleteFile,
 };
 export default FileReducer.reducer;

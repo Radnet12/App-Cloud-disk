@@ -46,4 +46,10 @@ export class FileService {
             responseType: "blob",
         });
     }
+
+    static fileDelete(id: string): Promise<AxiosResponse<FileType>> {
+        return $api.delete("/files/delete", {
+            params: { id },
+        });
+    }
 }

@@ -73,7 +73,6 @@ export const downloadFile = createAsyncThunk(
                 throw response;
             }
 
-
             const downloadUrl = window.URL.createObjectURL(response.data);
             const link = document.createElement("a");
             link.href = downloadUrl;
@@ -85,6 +84,24 @@ export const downloadFile = createAsyncThunk(
             return true;
         } catch (e: any) {
             console.log("Ошибка при скачивании файла: ", e.response);
+            return rejectWithValue(e.response?.data?.message);
+        }
+    }
+);
+
+export const deleteFile = createAsyncThunk(
+    "file/deleteFile",
+    async (fileId: string, { rejectWithValue }) => {
+        try {
+            const response = await FileService.fileDelete(fileId);
+
+            if (response.status !== 200) {
+                throw response;
+            }
+
+            return response.data;
+        } catch (e: any) {
+            console.log("Ошибка при удалении файла: ", e.response);
             return rejectWithValue(e.response?.data?.message);
         }
     }

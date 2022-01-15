@@ -16,17 +16,33 @@ export const AppLayout: React.FC = () => {
     const { isFetchError: isUserFetchError, isLoading } = useTypedSelector(
         (state) => state.user
     );
-    const { isFetchError: isFileFetchError, isFileUploadError } =
-        useTypedSelector((state) => state.file);
+    const {
+        isFetchError: isFileFetchError,
+        isFileUploadError,
+        isFileDeletingError,
+    } = useTypedSelector((state) => state.file);
 
     // HandlingError
     useEffect(() => {
-        if (isUserFetchError || isFileFetchError || isFileUploadError) {
+        if (
+            isUserFetchError ||
+            isFileFetchError ||
+            isFileUploadError ||
+            isFileDeletingError
+        ) {
             toast.error(
-                isUserFetchError || isFileFetchError || isFileUploadError
+                isUserFetchError ||
+                    isFileFetchError ||
+                    isFileUploadError ||
+                    isFileDeletingError
             );
         }
-    }, [isUserFetchError, isFileFetchError, isFileUploadError]);
+    }, [
+        isUserFetchError,
+        isFileFetchError,
+        isFileUploadError,
+        isFileDeletingError,
+    ]);
 
     return (
         <>

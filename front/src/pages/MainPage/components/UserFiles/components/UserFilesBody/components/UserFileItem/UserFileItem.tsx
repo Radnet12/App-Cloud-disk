@@ -28,7 +28,7 @@ export const UserFileItem: React.FC<UserFileItemProps> = (props) => {
     const { currentDir } = useTypedSelector((state) => state.file);
 
     // Dispatch
-    const { setCurrentDir, pushToDirStack, downloadFile } =
+    const { setCurrentDir, pushToDirStack, downloadFile, deleteFile } =
         useDispatchedAction();
 
     const clickHandler = (): void => {
@@ -41,6 +41,11 @@ export const UserFileItem: React.FC<UserFileItemProps> = (props) => {
     const downloadHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.stopPropagation();
         downloadFile(file);
+    };
+
+    const deleteHandler = (e: React.MouseEvent<HTMLButtonElement>): void => {
+        e.stopPropagation();
+        deleteFile(file.id);
     };
 
     return (
@@ -95,6 +100,7 @@ export const UserFileItem: React.FC<UserFileItemProps> = (props) => {
                 color="var(--clr-ui-error)"
                 hoverColor="var(--clr-ui-error)"
                 className="file-item__delete"
+                handler={deleteHandler}
             >
                 <svg
                     width="30"

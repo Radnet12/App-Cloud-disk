@@ -70,13 +70,13 @@ class FileService {
 
         // Getting path
         let path;
+        let filePath = file.name;
 
         // If parent dir exist create file in this dir
         if (parent) {
-            // path = path.join(filePath, userId, parent.path, file.name);
             path = this.#returnFilePath(userId, parent.path, file.name);
+            filePath = path.join(parent.path, file.name);
         } else {
-            // path = path.join(filePath, userId, file.name);
             path = this.#returnFilePath(userId, file.name);
         }
 
@@ -96,7 +96,7 @@ class FileService {
             name: file.name,
             type: fileType,
             size: file.size,
-            path: parent?.path,
+            path: filePath,
             parent: parent?._id,
             user: user._id,
         });
@@ -117,22 +117,70 @@ class FileService {
     }
 
     async downloadFile(fileId, userId) {
+        // Looking for file according to his id and user id
         const file = await FileModel.findOne({ _id: fileId, user: userId });
 
+        // if such file was not founded, throw error
         if (!file) {
-            throw ApiError.BadRequest("Не удалось найти файл");
+            throw ApiError.BadRequest("Не удалось найти файл!");
         }
 
         const path = this.#returnFilePath(userId, file.path, file.name);
 
         if (!fs.existsSync(path)) {
-            throw ApiError.BadRequest("Файл не найден");
+            throw ApiError.BadRequest("Файл не найден!");
         }
 
         return {
             path,
             name: file.name,
         };
+    }
+
+    async deleteFile(fileId, userId) {
+        // Looking for file according to his id and user id
+        const file = await FileModel.findOne({ _id: fileId, user: userId });
+
+        // if such file was not founded, throw error
+        if (!file) {
+            throw ApiError.BadRequest("Не удалось найти файл!");
+        }
+
+        // Getting path to the file on the server
+        let path;
+        if (file.type === "dir") {
+            path = this.#returnFilePath(userId, file.path);
+        } else {
+            path = this.#returnFilePath(userId, file.path, file.name);
+        }
+
+        // Checing if such file or dir exist
+        if (!fs.existsSync(path)) {
+            if (file.type === "dir") {
+                throw ApiError.BadRequest("Папка не найдена!");
+            } else {
+                throw ApiError.BadRequest("Файл не найден!");
+            }
+        }
+
+        // Deleting file or directory from the server
+        try {
+            if (file.type === "dir") {
+                this.#recursivDeleting(path);
+            } else {
+                fs.unlinkSync(path);
+            }
+        } catch (e) {
+            console.log("Ошибка при удалении: ", e);
+            throw ApiError.BadRequest("Папка не пустая!");
+        }
+
+        // deleting file from DB
+        await file.remove();
+
+        const fileDto = new FileDto(file);
+
+        return fileDto;
     }
 
     #returnFilePath(userId, ...rest) {
@@ -142,6 +190,21 @@ class FileService {
             userId,
             ...rest
         );
+    }
+
+    #recursivDeleting(path) {
+        let files = [];
+
+        files = fs.readdirSync(path);
+        files.forEach(function (file, index) {
+            let curPath = path + "/" + file;
+            if (fs.statSync(curPath).isDirectory()) {
+                deleteFolder(curPath);
+            } else {
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
     }
 }
 
