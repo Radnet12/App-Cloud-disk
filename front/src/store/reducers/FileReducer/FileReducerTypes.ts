@@ -16,16 +16,20 @@ export type FileType = {
     children: string[];
 };
 
+type fetchObject = {
+    isInProcess: boolean;
+    isError: string | null;
+};
+
 export type FileReducerState = {
-    files: FileType[];
-    isLoading: boolean;
-    isFileDeleting: boolean;
-    isFileDeletingError: string | null;
-    isFileDownloading: boolean;
-    isFileDownloadingError: string | null;
-    isFileUploading: boolean;
-    isFileUploadError: string | null;
-    isFetchError: string | null;
+    files: {
+        files: FileType[];
+        isLoading: boolean;
+        isError: string | null;
+    };
+    remove: fetchObject;
+    download: fetchObject;
+    upload: fetchObject;
     currentDir: string | null;
     dirStack: Array<string | null>;
 };

@@ -8,7 +8,7 @@ import { UserFileItem } from "../UserFileItem/UserFileItem";
 
 export const UserFileList: React.FC = () => {
     // **Redux state
-    const { files } = useTypedSelector((state) => state.file);
+    const { files } = useTypedSelector((state) => state.file.files);
 
     return (
         <ul className="user-files__list">

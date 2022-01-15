@@ -69,24 +69,28 @@ class FileService {
         user.usedSpace = user.usedSpace + file.size;
 
         // Getting path
-        let path;
+        let pathToTheServer;
         let filePath = file.name;
 
         // If parent dir exist create file in this dir
         if (parent) {
-            path = this.#returnFilePath(userId, parent.path, file.name);
+            pathToTheServer = this.#returnFilePath(
+                userId,
+                parent.path,
+                file.name
+            );
             filePath = path.join(parent.path, file.name);
         } else {
-            path = this.#returnFilePath(userId, file.name);
+            pathToTheServer = this.#returnFilePath(userId, file.name);
         }
 
         // Checking if such dir already exist
-        if (fs.existsSync(path)) {
+        if (fs.existsSync(pathToTheServer)) {
             throw ApiError.BadRequest(`Файл "${file.name}" уже существует!`);
         }
 
         // Moving file to cloud
-        await file.mv(path);
+        await file.mv(pathToTheServer);
 
         // Getting file type
         const fileType = file.name.split(".").pop();
@@ -146,16 +150,8 @@ class FileService {
             throw ApiError.BadRequest("Не удалось найти файл!");
         }
 
-        // Getting path to the file on the server
-        let path;
-        if (file.type === "dir") {
-            path = this.#returnFilePath(userId, file.path);
-        } else {
-            path = this.#returnFilePath(userId, file.path, file.name);
-        }
-
         // Checing if such file or dir exist
-        if (!fs.existsSync(path)) {
+        if (!fs.existsSync(this.#returnFilePath(userId, file.path))) {
             if (file.type === "dir") {
                 throw ApiError.BadRequest("Папка не найдена!");
             } else {
@@ -166,9 +162,9 @@ class FileService {
         // Deleting file or directory from the server
         try {
             if (file.type === "dir") {
-                this.#recursivDeleting(path);
+                this.#recursivDeleting(this.#returnFilePath(userId, file.path));
             } else {
-                fs.unlinkSync(path);
+                fs.unlinkSync(this.#returnFilePath(userId, file.path));
             }
         } catch (e) {
             console.log("Ошибка при удалении: ", e);
@@ -192,19 +188,20 @@ class FileService {
         );
     }
 
-    #recursivDeleting(path) {
+    #recursivDeleting(filePath) {
         let files = [];
 
-        files = fs.readdirSync(path);
-        files.forEach(function (file, index) {
-            let curPath = path + "/" + file;
+        files = fs.readdirSync(filePath);
+        files.forEach((file, index) => {
+            let curPath = path.join(filePath, file);
+
             if (fs.statSync(curPath).isDirectory()) {
-                deleteFolder(curPath);
+               this.#recursivDeleting(curPath);
             } else {
                 fs.unlinkSync(curPath);
             }
         });
-        fs.rmdirSync(path);
+        fs.rmdirSync(filePath);
     }
 }
 

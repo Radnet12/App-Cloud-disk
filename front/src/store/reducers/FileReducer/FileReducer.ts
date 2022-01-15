@@ -13,17 +13,25 @@ import {
 } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
-    files: [],
-    isLoading: false,
-    isFileDeleting: false,
-    isFileDeletingError: null,
-    isFileDownloading: false,
-    isFileDownloadingError: null,
-    isFileUploading: false,
-    isFileUploadError: null,
-    isFetchError: null,
     currentDir: null,
     dirStack: [],
+    files: {
+        files: [],
+        isLoading: false,
+        isError: null,
+    },
+    remove: {
+        isInProcess: false,
+        isError: null,
+    },
+    download: {
+        isInProcess: false,
+        isError: null,
+    },
+    upload: {
+        isInProcess: false,
+        isError: null,
+    },
 };
 
 const FileReducer = createSlice({
@@ -42,79 +50,79 @@ const FileReducer = createSlice({
     },
     extraReducers: {
         [getFiles.pending.type]: (state) => {
-            state.isLoading = true;
+            state.files.isLoading = true;
         },
         [getFiles.fulfilled.type]: (
             state,
             action: PayloadAction<FileType[]>
         ) => {
-            state.isFetchError = null;
-            state.files = action.payload;
-            state.isLoading = false;
+            state.files.isError = null;
+            state.files.files = action.payload;
+            state.files.isLoading = false;
         },
         [getFiles.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isFetchError = action.payload;
-            state.isLoading = false;
+            state.files.isError = action.payload;
+            state.files.isLoading = false;
         },
 
         [createDir.fulfilled.type]: (
             state,
             action: PayloadAction<FileType>
         ) => {
-            state.isFetchError = null;
-            state.files = [...state.files, action.payload];
+            state.files.isError = null;
+            state.files.files = [...state.files.files, action.payload];
         },
         [createDir.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isFetchError = action.payload;
+            state.files.isError = action.payload;
         },
 
         [uploadFile.pending.type]: (state) => {
-            state.isFileUploading = true;
+            state.upload.isInProcess = true;
         },
         [uploadFile.fulfilled.type]: (
             state,
             action: PayloadAction<FileType>
         ) => {
-            state.isFileUploadError = null;
-            state.files.push(action.payload);
-            state.isFileUploading = false;
+            state.upload.isError = null;
+            state.files.files.push(action.payload);
+            state.upload.isInProcess = false;
         },
         [uploadFile.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isFileUploadError = action.payload;
-            state.isFileUploading = false;
+            state.upload.isError = action.payload;
+            state.upload.isInProcess = false;
         },
 
         [downloadFile.pending.type]: (state) => {
-            state.isFileDownloading = true;
+            state.download.isInProcess = true;
         },
         [downloadFile.fulfilled.type]: (state) => {
-            state.isFileDownloadingError = null;
-            state.isFileDownloading = false;
+            state.download.isError = null;
+            state.download.isInProcess = false;
         },
         [downloadFile.rejected.type]: (
             state,
             action: PayloadAction<string>
         ) => {
-            state.isFileDownloadingError = action.payload;
-            state.isFileDownloading = false;
+            state.download.isError = action.payload;
+            state.download.isInProcess = false;
         },
 
         [deleteFile.pending.type]: (state) => {
-            state.isFileDeleting = true;
+            state.remove.isInProcess = true;
         },
         [deleteFile.fulfilled.type]: (
             state,
             action: PayloadAction<FileType>
         ) => {
-            state.isFileDeletingError = null;
-            state.files = state.files.filter(
+            state.remove.isError = null;
+            state.files.files = state.files.files.filter(
                 (file) => file.id !== action.payload.id
             );
-            state.isFileDeleting = false;
+            state.remove.isInProcess = false;
         },
         [deleteFile.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isFileDeletingError = action.payload;
-            state.isFileDeleting = false;
+            state.remove.isError = action.payload;
+            state.remove.isInProcess = false;
         },
     },
 });

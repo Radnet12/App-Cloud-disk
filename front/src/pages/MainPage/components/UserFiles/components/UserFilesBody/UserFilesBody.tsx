@@ -10,7 +10,7 @@ import { UserFileList } from "./components/UserFilesList/UserFileList";
 
 export const UserFilesBody: React.FC = () => {
     // **Redux state
-    const { currentDir, isLoading } = useTypedSelector((state) => state.file);
+    const { currentDir, files } = useTypedSelector((state) => state.file);
 
     // Dispatch
     const { getFiles } = useDispatchedAction();
@@ -22,7 +22,7 @@ export const UserFilesBody: React.FC = () => {
 
     return (
         <div className="user-files__body">
-            {isLoading ? <Loader /> : <UserFileList />}
+            {files.isLoading ? <Loader /> : <UserFileList />}
         </div>
     );
 };
