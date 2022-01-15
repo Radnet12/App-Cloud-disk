@@ -11,6 +11,7 @@ const router = new Router();
 
 // Routes
 router.post("/create", AuthMiddleware, FileController.createDir);
+router.get("/download", AuthMiddleware, FileController.downloadFile);
 router.post("/upload", AuthMiddleware, FileController.uploadFile);
 router.get("", AuthMiddleware, FileController.getFiles);
 

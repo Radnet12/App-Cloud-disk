@@ -62,3 +62,30 @@ export const uploadFile = createAsyncThunk(
         }
     }
 );
+
+export const downloadFile = createAsyncThunk(
+    "file/downloadFile",
+    async (file: FileType, { rejectWithValue }) => {
+        try {
+            const response = await FileService.fileDownload(file.id);
+
+            if (response.status !== 200) {
+                throw response;
+            }
+
+
+            const downloadUrl = window.URL.createObjectURL(response.data);
+            const link = document.createElement("a");
+            link.href = downloadUrl;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            return true;
+        } catch (e: any) {
+            console.log("Ошибка при скачивании файла: ", e.response);
+            return rejectWithValue(e.response?.data?.message);
+        }
+    }
+);

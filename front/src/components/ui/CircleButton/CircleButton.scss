@@ -1,0 +1,35 @@
+@import "../../../styles/variables.scss";
+
+.circle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color);
+    border-radius: 40px;
+    padding: 0.4em 0.8em;
+    width: max-content;
+    min-width: 60px;
+    min-height: 40px;
+    font-size: 1.4rem;
+    color: var(--color);
+    transition: border-color $ms, color $ms;
+
+    svg {
+        stroke: var(--color);
+        transition: stroke $ms;
+    }
+
+    @media (hover) {
+        &:hover,
+        &:focus {
+            border-color: var(--hoverColor);
+            color: var(--hoverColor);
+            transition: border-color $ms, color $ms;
+
+            svg {
+                stroke: var(--hoverColor);
+                transition: stroke $ms;
+            }
+        }
+    }
+}

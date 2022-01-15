@@ -1,6 +1,3 @@
-// Modules
-const ApiError = require("../exceptions/ApiError");
-
 // Models
 const FileModel = require("../models/FileModel");
 
@@ -9,6 +6,7 @@ const FileService = require("../services/FileService");
 
 // Dtos
 const FileDto = require("../dtos/FileDto");
+const ApiError = require("../exceptions/ApiError");
 
 class FileController {
     async createDir(req, res, next) {
@@ -70,6 +68,19 @@ class FileController {
             );
 
             return res.json(file);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async downloadFile(req, res, next) {
+        try {
+            const fileObject = await FileService.downloadFile(
+                req.query.id,
+                req.user.id
+            );
+
+            return res.download(fileObject.path, fileObject.name);
         } catch (e) {
             next(e);
         }

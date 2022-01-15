@@ -19,6 +19,8 @@ export type FileType = {
 export type FileReducerState = {
     files: FileType[];
     isLoading: boolean;
+    isFileDownloading: boolean;
+    isFileDownloadingError: string | null;
     isFileUploading: boolean;
     isFileUploadError: string | null;
     isFetchError: string | null;

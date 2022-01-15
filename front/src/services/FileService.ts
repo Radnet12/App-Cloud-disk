@@ -39,4 +39,11 @@ export class FileService {
 
         return $api.post("/files/upload", formData);
     }
+
+    static fileDownload(id: string): Promise<AxiosResponse<Blob>> {
+        return $api.get("/files/download", {
+            params: { id },
+            responseType: "blob",
+        });
+    }
 }

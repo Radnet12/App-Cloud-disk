@@ -116,6 +116,25 @@ class FileService {
         return fileDto;
     }
 
+    async downloadFile(fileId, userId) {
+        const file = await FileModel.findOne({ _id: fileId, user: userId });
+
+        if (!file) {
+            throw ApiError.BadRequest("Не удалось найти файл");
+        }
+
+        const path = this.#returnFilePath(userId, file.path, file.name);
+
+        if (!fs.existsSync(path)) {
+            throw ApiError.BadRequest("Файл не найден");
+        }
+
+        return {
+            path,
+            name: file.name,
+        };
+    }
+
     #returnFilePath(userId, ...rest) {
         return path.join(
             __dirname,

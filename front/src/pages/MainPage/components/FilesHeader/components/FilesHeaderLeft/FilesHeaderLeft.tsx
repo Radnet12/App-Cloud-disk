@@ -5,7 +5,7 @@ import { useTypedSelector } from "../../../../../../hooks/useTypedSelector";
 import { useDispatchedAction } from "../../../../../../hooks/useDispatchedActions";
 
 // Components
-import { Return } from "../../../../../../components/ui/Return/Return";
+import { CircleButton } from "../../../../../../components/ui/CircleButton/CircleButton";
 import { UploadFile } from "../../../../../../components/ui/UploadFile/UploadFile";
 import { Modal } from "../../../../../../components/common/Modal/Modal";
 import { Input } from "../../../../../../components/ui/Input/Input";
@@ -54,23 +54,34 @@ export const FilesHeaderLeft: React.FC = () => {
         <>
             <div className="files-header__left">
                 <div className="files-header__left-row">
-                    <Return
-                        color="var(--clr-default-100)"
-                        hoverColor="var(--clr-secondary-400)"
-                        handler={returnToPreviousFolder}
-                    />
-                    <button
-                        className="files-header__btn"
-                        style={
-                            {
-                                "--color": "var(--clr-default-100)",
-                                "--hoverColor": "var(--clr-secondary-400)",
-                            } as React.CSSProperties
-                        }
-                        onClick={() => setIsModalVisile(true)}
+                    <CircleButton handler={returnToPreviousFolder}>
+                        <svg
+                            width="30"
+                            height="25"
+                            viewBox="0 0 30 25"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M9 6L3 10L9 14"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M4 10H20.905C24.2837 10 27 13.4685 27 17.5938V19"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </CircleButton>
+                    <CircleButton
+                        handler={() => setIsModalVisile(true)}
+                        style={{ marginLeft: 15 }}
                     >
                         Создать новую папку
-                    </button>
+                    </CircleButton>
                 </div>
                 <UploadFile
                     labelText="Загрузить файлы"
