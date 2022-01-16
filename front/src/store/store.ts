@@ -3,10 +3,12 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 // Reducers
 import UserReducer from "./reducers/UserReducer/UserReducer";
 import FileReducer from "./reducers/FileReducer/FileReducer";
+import UploadReducer from "./reducers/UploadReducer/UploadReducer";
 
 const rootReducer = combineReducers({
     user: UserReducer,
     file: FileReducer,
+    upload: UploadReducer
 });
 
 export const setupStore = () => {

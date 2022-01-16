@@ -1,10 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+// Redux
+import { UploadReducerActions } from "../UploadReducer/UploadReducer";
+
 // API
 import { FileService } from "../../../services/FileService";
 
 // Types
 import { FileType, UploadFileType } from "./FileReducerTypes";
+
+// Utils
+import { createId } from "../../../utils/createId";
 
 export const getFiles = createAsyncThunk(
     "file/getFiles",
@@ -47,11 +53,27 @@ export const createDir = createAsyncThunk(
 
 export const uploadFile = createAsyncThunk(
     "file/uploadFile",
-    async ({ file, parent }: UploadFileType, { rejectWithValue }) => {
+    async ({ file, parent }: UploadFileType, { rejectWithValue, dispatch }) => {
         try {
+            const uploadedFile = {
+                id: createId(),
+                name: file.name,
+                progress: 0,
+            };
+
+            dispatch(UploadReducerActions.setFile(uploadedFile));
+
             const calculateProgress = (progress: number) => {
-                // CALCULATING PROGRESS
-                console.log("progress", progress);
+                dispatch(
+                    UploadReducerActions.changeProgress({
+                        ...uploadedFile,
+                        progress,
+                    })
+                );
+
+                if (progress >= 100) {
+                    dispatch(UploadReducerActions.deleteFile(uploadedFile));
+                }
             };
 
             const response = await FileService.fileUpload(

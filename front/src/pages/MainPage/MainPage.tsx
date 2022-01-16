@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Redux
 import { useDispatchedAction } from "../../hooks/useDispatchedActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+
+// Libs
+import { toast } from "react-toastify";
 
 // Components
 import { Container } from "../../components/ui/Container/Container";
 import { DragZone } from "../../components/ui/DragZone/DragZone";
 import { FilesHeader } from "./components/FilesHeader/FilesHeader";
 import { UserFiles } from "./components/UserFiles/UserFiles";
+import { UploadContainer } from "../../components/ui/UploadContainer/UploadContainer";
 
 // Styles
 import "./MainPage.scss";
@@ -16,6 +20,8 @@ import "./MainPage.scss";
 const MainPage: React.FC = () => {
     // **Redux state
     const { currentDir } = useTypedSelector((state) => state.file);
+    const { files } = useTypedSelector((state) => state.upload);
+
     // **Local state
     const [dragEnter, setDragEnter] = useState<boolean>(false);
 
@@ -48,6 +54,23 @@ const MainPage: React.FC = () => {
         }
         setDragEnter(false);
     };
+
+    // Uploading file progress
+    useEffect(() => {
+        files.forEach((file) => {
+            if (toast.isActive(file.id)) {
+                toast.update(file.id, {
+                    render: <UploadContainer file={file} />,
+                    type: "info",
+                });
+            } else {
+                toast(<UploadContainer file={file} />, {
+                    toastId: file.id,
+                    type: "info",
+                });
+            }
+        });
+    }, [files]);
 
     return (
         <section className="hero">

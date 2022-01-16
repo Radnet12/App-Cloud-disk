@@ -58,7 +58,6 @@ export const AppLayout: React.FC = () => {
                 pauseOnHover={false}
                 pauseOnFocusLoss={false}
                 draggable={false}
-                limit={3}
             />
         </>
     );
