@@ -13,6 +13,7 @@ import {
 } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
+    sortType: null,
     currentDir: null,
     dirStack: [],
     files: {
@@ -46,6 +47,9 @@ const FileReducer = createSlice({
         },
         popFromDirStack: (state) => {
             state.dirStack.pop();
+        },
+        setSortType: (state, action: PayloadAction<string | null>) => {
+            state.sortType = action.payload;
         },
     },
     extraReducers: {

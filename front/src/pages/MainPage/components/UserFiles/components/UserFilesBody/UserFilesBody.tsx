@@ -10,15 +10,17 @@ import { UserFileList } from "./components/UserFilesList/UserFileList";
 
 export const UserFilesBody: React.FC = () => {
     // **Redux state
-    const { currentDir, files } = useTypedSelector((state) => state.file);
+    const { currentDir, files, sortType } = useTypedSelector(
+        (state) => state.file
+    );
 
     // Dispatch
     const { getFiles } = useDispatchedAction();
 
     useEffect(() => {
-        getFiles(currentDir);
+        getFiles({ folderId: currentDir, sortType });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentDir]);
+    }, [currentDir, sortType]);
 
     return (
         <div className="user-files__body">

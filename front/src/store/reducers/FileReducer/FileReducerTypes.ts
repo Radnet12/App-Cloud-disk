@@ -1,3 +1,8 @@
+export type GetFilesArgsType = {
+    folderId: string | null;
+    sortType: string | null;
+};
+
 export type UploadFileType = {
     file: File;
     parent: string | null;
@@ -31,5 +36,6 @@ export type FileReducerState = {
     download: fetchObject;
     upload: fetchObject;
     currentDir: string | null;
+    sortType: string | null;
     dirStack: Array<string | null>;
 };

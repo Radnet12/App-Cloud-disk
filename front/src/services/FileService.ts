@@ -9,9 +9,10 @@ import { $api } from "./AxiosInstance";
 
 export class FileService {
     static getFiles(
-        folderId: string | null
+        folderId: string | null,
+        sortType: string | null
     ): Promise<AxiosResponse<FileType[]>> {
-        return $api.get("/files", { params: { id: folderId } });
+        return $api.get("/files", { params: { id: folderId, sort: sortType } });
     }
 
     static createDir(

@@ -7,16 +7,16 @@ import { UploadReducerActions } from "../UploadReducer/UploadReducer";
 import { FileService } from "../../../services/FileService";
 
 // Types
-import { FileType, UploadFileType } from "./FileReducerTypes";
+import { FileType, GetFilesArgsType, UploadFileType } from "./FileReducerTypes";
 
 // Utils
 import { createId } from "../../../utils/createId";
 
 export const getFiles = createAsyncThunk(
     "file/getFiles",
-    async (folderId: string | null, { rejectWithValue }) => {
+    async ({ folderId, sortType }: GetFilesArgsType, { rejectWithValue }) => {
         try {
-            const response = await FileService.getFiles(folderId);
+            const response = await FileService.getFiles(folderId, sortType);
 
             if (response.status !== 200) {
                 throw response;

@@ -31,13 +31,14 @@ export const UserFileItem: React.FC<UserFileItemProps> = (props) => {
     const { currentDir } = useTypedSelector((state) => state.file);
 
     // Dispatch
-    const { setCurrentDir, pushToDirStack, downloadFile, deleteFile } =
+    const { setCurrentDir, pushToDirStack, downloadFile, deleteFile, setSortType } =
         useDispatchedAction();
 
     const clickHandler = (): void => {
         if (file.type === "dir") {
             pushToDirStack(currentDir);
             setCurrentDir(file.id);
+            setSortType(null);
         }
     };
 
