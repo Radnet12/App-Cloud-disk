@@ -52,7 +52,7 @@ class FileController {
 
     async getFiles(req, res, next) {
         try {
-            const files = await FileService.getFiles(req.user.id, req.query.id);
+            const files = await FileService.getFiles(req.user.id, req.query.id, req.query.sort);
 
             return res.json(files);
         } catch (e) {

@@ -34,12 +34,12 @@ class FileService {
         });
     }
 
-    async getFiles(userId, parentId) {
+    async getFiles(userId, parentId, sortType) {
         try {
             const files = await FileModel.find({
                 user: userId,
                 parent: parentId,
-            });
+            }).sort({ [sortType]: 1 });
 
             const filesDto = files.map((file) => new FileDto(file));
 
@@ -196,7 +196,7 @@ class FileService {
             let curPath = path.join(filePath, file);
 
             if (fs.statSync(curPath).isDirectory()) {
-               this.#recursivDeleting(curPath);
+                this.#recursivDeleting(curPath);
             } else {
                 fs.unlinkSync(curPath);
             }

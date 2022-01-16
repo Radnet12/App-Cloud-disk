@@ -10,6 +10,9 @@ import moment from "moment";
 // Types
 import { FileType } from "../../../../../../../../store/reducers/FileReducer/FileReducerTypes";
 
+// Utils
+import { sizeFormats } from "../../../../../../../../utils/sizeFormats";
+
 // Components
 import { CircleButton } from "../../../../../../../../components/ui/CircleButton/CircleButton";
 
@@ -120,7 +123,7 @@ export const UserFileItem: React.FC<UserFileItemProps> = (props) => {
             <div className="file-item__date">
                 {moment(file.date).format("DD.MM.YYYY HH:MM:SS")}
             </div>
-            <div className="file-item__size">{file.size}</div>
+            <div className="file-item__size">{sizeFormats(file.size)}</div>
         </li>
     );
 };
