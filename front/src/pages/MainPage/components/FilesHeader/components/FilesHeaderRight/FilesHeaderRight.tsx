@@ -5,6 +5,7 @@ import { useDispatchedAction } from "../../../../../../hooks/useDispatchedAction
 
 // Componenets
 import { Dropdown } from "../../../../../../components/common/Dropdown/Dropdown";
+import { FilesView } from "./components/FilesView/FilesView";
 
 // Types
 import { Option } from "../../../../../../models/Options";
@@ -27,6 +28,7 @@ export const FilesHeaderRight: React.FC = () => {
                 defaultActiveItem={sortTypes[0]}
                 onClick={changeSort}
             />
+            <FilesView />
         </div>
     );
 };

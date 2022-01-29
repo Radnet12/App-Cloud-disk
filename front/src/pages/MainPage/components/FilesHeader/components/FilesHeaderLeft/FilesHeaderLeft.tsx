@@ -54,7 +54,10 @@ export const FilesHeaderLeft: React.FC = () => {
         <>
             <div className="files-header__left">
                 <div className="files-header__left-row">
-                    <CircleButton handler={returnToPreviousFolder}>
+                    <CircleButton
+                        handler={returnToPreviousFolder}
+                        disabled={dirStack.length === 0}
+                    >
                         <svg
                             width="30"
                             height="25"

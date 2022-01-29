@@ -38,4 +38,5 @@ export type FileReducerState = {
     currentDir: string | null;
     sortType: string | null;
     dirStack: Array<string | null>;
+    viewType: string;
 };

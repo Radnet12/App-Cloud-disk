@@ -1,14 +1,14 @@
 @import "../../../../../../../../styles/variables.scss";
 
 .file-item {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: 1fr 7fr repeat(4, 1fr);
-    align-items: center;
-    border-bottom: 1px solid var(--clr-secondary-500);
-    padding-top: 10px;
-    padding-bottom: 10px;
     cursor: pointer;
+
+    &--empty {
+        display: block;
+        border-bottom: none;
+        text-align: center;
+        cursor: default;
+    }
 
     &:not(.file-item--empty) {
         @media (hover) {
@@ -19,79 +19,114 @@
             &:hover,
             &:focus {
                 .file-item__image {
-                    transform: scale(1.15);
+                    transform: scale(1.1);
                     transition: transform $ms;
                 }
             }
         }
     }
 
-    @media (hover) {
-        &:hover,
-        &:focus {
-            .file-item__delete {
-                opacity: 1;
-                visibility: visible;
-                transition: opacity $ms, visibility $ms;
-                pointer-events: initial;
+    &--plate {
+        .file-item__image {
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 10px;
+            max-width: 182px;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
             }
+        }
+
+        .file-item__btns {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            & > *:not(:last-child) {
+                margin-right: 15px;
+            }
+        }
+
+        .file-item__name {
+            margin-bottom: 15px;
+            text-align: center;
         }
     }
 
-    &--type {
-        &-file {
-            @media (hover) {
-                &:hover,
-                &:focus {
-                    .file-item__download {
-                        opacity: 1;
-                        visibility: visible;
-                        transition: opacity $ms, visibility $ms;
-                        pointer-events: initial;
+    &--list {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr 7fr repeat(4, 1fr);
+        align-items: center;
+        border-bottom: 1px solid var(--clr-secondary-500);
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        &.file-item--type {
+            &-file {
+                @media (hover) {
+                    &:hover,
+                    &:focus {
+                        .file-item__download {
+                            opacity: 1;
+                            visibility: visible;
+                            transition: opacity $ms, visibility $ms,
+                                border-color $ms;
+                            pointer-events: initial;
+                        }
                     }
                 }
             }
         }
-    }
 
-    &--empty {
-        display: block;
-        border-bottom: none;
-        text-align: center;
-    }
+        .file-item__image {
+            text-align: center;
+        }
 
-    &__image {
-        text-align: center;
-    }
+        .file-item__download {
+            grid-column-start: 3;
+            margin-right: auto;
+            margin-left: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity $ms, visibility $ms;
+            pointer-events: none;
+        }
 
-    &__download {
-        grid-column-start: 3;
-        margin-right: auto;
-        margin-left: auto;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity $ms, visibility $ms;
-        pointer-events: none;
-    }
+        .file-item__delete {
+            grid-column-start: 4;
+            margin-right: auto;
+            margin-left: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity $ms, visibility $ms;
+            pointer-events: none;
+        }
 
-    &__delete {
-        grid-column-start: 4;
-        margin-right: auto;
-        margin-left: auto;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity $ms, visibility $ms;
-        pointer-events: none;
-    }
+        .file-item__date {
+            grid-column-start: 5;
+            font-size: 1.4rem;
+            text-align: center;
+        }
 
-    &__date {
-        grid-column-start: 5;
-        font-size: 1.4rem;
-        text-align: center;
-    }
+        .file-item__size {
+            font-size: 1.4rem;
+            text-align: center;
+        }
 
-    &__size {
-        font-size: 1.4rem;
-        text-align: center;
+        @media (hover) {
+            &:hover,
+            &:focus {
+                .file-item__delete {
+                    opacity: 1;
+                    visibility: visible;
+                    transition: opacity $ms, visibility $ms;
+                    pointer-events: initial;
+                }
+            }
+        }
     }
 }

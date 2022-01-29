@@ -14,6 +14,7 @@ import {
 } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
+    viewType: "list",
     sortType: null,
     currentDir: null,
     dirStack: [],
@@ -51,6 +52,9 @@ const FileReducer = createSlice({
         },
         setSortType: (state, action: PayloadAction<string | null>) => {
             state.sortType = action.payload;
+        },
+        setViewType: (state, action: PayloadAction<string>) => {
+            state.viewType = action.payload;
         },
     },
     extraReducers: {

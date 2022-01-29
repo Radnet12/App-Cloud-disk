@@ -16,4 +16,43 @@
             align-items: center;
         }
     }
+
+    &__right {
+        display: flex;
+        align-items: center;
+    }
+
+    &__view {
+        display: flex;
+        margin-left: 25px;
+
+        &-type {
+            svg {
+                width: 20px;
+                height: 20px;
+                fill: var(--clr-default-100);
+                transition: fill $ms;
+
+                @media (hover) {
+                    &:hover,
+                    &:focus {
+                        fill: var(--clr-secondary-400);
+                        transition: fill $ms;
+                    }
+                }
+            }
+
+            &--active {
+                cursor: default;
+
+                svg {
+                    fill: var(--clr-secondary-400);
+                }
+            }
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+        }
+    }
 }

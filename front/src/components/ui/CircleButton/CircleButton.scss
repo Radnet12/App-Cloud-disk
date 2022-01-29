@@ -14,6 +14,11 @@
     color: var(--color);
     transition: border-color $ms, color $ms;
 
+    &:disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
     svg {
         stroke: var(--color);
         transition: stroke $ms;
