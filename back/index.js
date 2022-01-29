@@ -23,6 +23,7 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(express.static(process.env.STATIC_DIR_NAME));
 
 // routes
 app.use("/api/auth", AuthRoutes);

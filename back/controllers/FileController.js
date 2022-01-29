@@ -116,6 +116,26 @@ class FileController {
             next(e);
         }
     }
+
+    async uploadAvatar(req, res, next) {
+        try {
+            await FileService.uploadAvatar(req.user.id, req.files.file);
+
+            return res.status(200);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async deleteAvatar(req, res, next) {
+        try {
+            const newUser = await FileService.deleteAvatar(req.user.id);
+
+            return res.json(newUser);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new FileController();

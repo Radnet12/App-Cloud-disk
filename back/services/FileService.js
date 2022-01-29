@@ -1,6 +1,7 @@
 // Modules
 const fs = require("fs");
 const path = require("path");
+const uuid = require("uuid");
 
 // Models
 const FileModel = require("../models/FileModel");
@@ -11,6 +12,7 @@ const ApiError = require("../exceptions/ApiError");
 
 // DTO
 const FileDto = require("../dtos/FileDto");
+const UserDto = require("../dtos/UserDto");
 
 class FileService {
     createDir(file) {
@@ -188,6 +190,48 @@ class FileService {
         const filesDto = files.map((file) => new FileDto(file));
 
         return filesDto;
+    }
+
+    async uploadAvatar(userId, file) {
+        const user = await UserModel.findById(userId);
+
+        // Creating name for avatar
+        const avatarName = uuid.v4() + ".jpg";
+
+        file.mv(
+            path.join(
+                __dirname,
+                `../${process.env.STATIC_DIR_NAME}`,
+                avatarName
+            )
+        );
+
+        user.avatar = avatarName;
+
+        await user.save();
+
+        return;
+    }
+
+    async deleteAvatar(userId) {
+        const user = await UserModel.findById(userId);
+
+        if (!user.avatar) {
+            throw ApiError.BadRequest("У Вас нет изображения");
+        }
+
+        fs.unlinkSync(
+            path.join(
+                __dirname,
+                `../${process.env.STATIC_DIR_NAME}`,
+                user.avatar
+            )
+        );
+
+        user.avatar = null;
+        await user.save();
+
+        return new UserDto(user);
     }
 
     #returnFilePath(userId, ...rest) {
