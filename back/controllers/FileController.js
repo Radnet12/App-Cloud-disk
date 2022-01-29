@@ -52,7 +52,11 @@ class FileController {
 
     async getFiles(req, res, next) {
         try {
-            const files = await FileService.getFiles(req.user.id, req.query.id, req.query.sort);
+            const files = await FileService.getFiles(
+                req.user.id,
+                req.query.id,
+                req.query.sort
+            );
 
             return res.json(files);
         } catch (e) {
@@ -95,6 +99,19 @@ class FileController {
             );
 
             return res.json(deletedFile);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async searchFiles(req, res, next) {
+        try {
+            const files = await FileService.searchFiles(
+                req.user.id,
+                req.query.search
+            );
+
+            return res.json(files);
         } catch (e) {
             next(e);
         }

@@ -129,7 +129,8 @@ class FileService {
             throw ApiError.BadRequest("Не удалось найти файл!");
         }
 
-        const path = this.#returnFilePath(userId, file.path, file.name);
+        const path = this.#returnFilePath(userId, file.path);
+        console.log("path", path);
 
         if (!fs.existsSync(path)) {
             throw ApiError.BadRequest("Файл не найден!");
@@ -177,6 +178,16 @@ class FileService {
         const fileDto = new FileDto(file);
 
         return fileDto;
+    }
+
+    async searchFiles(userId, search) {
+        let files = await FileModel.find({ user: userId });
+
+        files = files.filter((file) => file.name.includes(search));
+
+        const filesDto = files.map((file) => new FileDto(file));
+
+        return filesDto;
     }
 
     #returnFilePath(userId, ...rest) {

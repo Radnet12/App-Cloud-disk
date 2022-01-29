@@ -137,3 +137,21 @@ export const deleteFile = createAsyncThunk(
         }
     }
 );
+
+export const searchFiles = createAsyncThunk(
+    "file/searchFiles",
+    async (search: string, { rejectWithValue }) => {
+        try {
+            const response = await FileService.searchFile(search);
+
+            if (response.status !== 200) {
+                throw response;
+            }
+
+            return response.data;
+        } catch (e: any) {
+            console.log("Ошибка при поиске файлов: ", e.response);
+            return rejectWithValue(e.response?.data?.message);
+        }
+    }
+);

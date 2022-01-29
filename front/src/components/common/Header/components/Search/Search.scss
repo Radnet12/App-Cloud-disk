@@ -1,0 +1,31 @@
+@import "../../../../../styles/variables.scss";
+
+.search {
+    position: relative;
+    margin-left: auto;
+
+    input {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        color: inherit;
+        background-color: transparent;
+
+        &:focus ~ span {
+            opacity: 1;
+            transform: translate(-50%, 0) scaleX(1);
+            transition: transform $ms, opacity $ms;
+        }
+    }
+
+    span {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        opacity: 0;
+        background-color: #fff;
+        transform: translate(-50%, 0) scaleX(0);
+        transform-origin: center;
+        transition: transform $ms, opacity $ms;
+    }
+}

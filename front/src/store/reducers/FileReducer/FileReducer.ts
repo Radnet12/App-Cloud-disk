@@ -10,6 +10,7 @@ import {
     uploadFile,
     downloadFile,
     deleteFile,
+    searchFiles,
 } from "./FileReducerThunk";
 
 const initialState: FileReducerState = {
@@ -128,6 +129,22 @@ const FileReducer = createSlice({
             state.remove.isError = action.payload;
             state.remove.isInProcess = false;
         },
+
+        [searchFiles.pending.type]: (state) => {
+            state.files.isLoading = true;
+        },
+        [searchFiles.fulfilled.type]: (
+            state,
+            action: PayloadAction<FileType[]>
+        ) => {
+            state.files.isError = null;
+            state.files.files = action.payload;
+            state.files.isLoading = false;
+        },
+        [searchFiles.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.files.files = [];
+            state.files.isError = action.payload;
+        },
     },
 });
 
@@ -138,5 +155,6 @@ export const FileReducerActions = {
     uploadFile,
     downloadFile,
     deleteFile,
+    searchFiles,
 };
 export default FileReducer.reducer;

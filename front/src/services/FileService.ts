@@ -72,4 +72,10 @@ export class FileService {
             params: { id },
         });
     }
+
+    static searchFile(search: string): Promise<AxiosResponse<FileType[]>> {
+        return $api.get("/files/search", {
+            params: { search },
+        });
+    }
 }
