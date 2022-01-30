@@ -1,7 +1,7 @@
 // Modules
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const ApiError = require("../../../04_Advanced-auth/back/exceptions/ApiError");
+const ApiError = require("../exceptions/ApiError");
 
 // Dtos
 const UserDto = require("../dtos/UserDto");
