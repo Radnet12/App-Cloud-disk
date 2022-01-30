@@ -5,13 +5,14 @@ import { UserReducerState, UserType } from "./UserReducerTypes";
 import { AuthResponse } from "../../../models/AuthResponse";
 
 // Thunks
-import { registration, login, authorization } from "./UserReducerThunk";
+import { registration, login, authorization, uploadAvatar, deleteAvatar } from "./UserReducerThunk";
 
 const initialState: UserReducerState = {
     user: {} as UserType,
     isAuth: false,
     isFetchError: null,
     isLoading: false,
+    isAvatarLoading: false
 };
 
 const UserReducer = createSlice({
@@ -86,6 +87,44 @@ const UserReducer = createSlice({
             state.isFetchError = action.payload;
             state.isLoading = false;
         },
+
+        [uploadAvatar.pending.type]: (state) => {
+            state.isAvatarLoading = true;
+        },
+        [uploadAvatar.fulfilled.type]: (
+            state,
+            action: PayloadAction<UserType>
+        ) => {
+            state.isFetchError = null;
+            state.user = action.payload;
+            state.isAvatarLoading = false;
+        },
+        [uploadAvatar.rejected.type]: (
+            state,
+            action: PayloadAction<string>
+        ) => {
+            state.isFetchError = action.payload;
+            state.isAvatarLoading = false;
+        },
+
+        [deleteAvatar.pending.type]: (state) => {
+            state.isAvatarLoading = true;
+        },
+        [deleteAvatar.fulfilled.type]: (
+            state,
+            action: PayloadAction<UserType>
+        ) => {
+            state.isFetchError = null;
+            state.user = action.payload;
+            state.isAvatarLoading = false;
+        },
+        [deleteAvatar.rejected.type]: (
+            state,
+            action: PayloadAction<string>
+        ) => {
+            state.isFetchError = action.payload;
+            state.isAvatarLoading = false;
+        },
     },
 });
 
@@ -94,5 +133,7 @@ export const UserReducerActions = {
     registration,
     login,
     authorization,
+    uploadAvatar,
+    deleteAvatar,
 };
 export default UserReducer.reducer;

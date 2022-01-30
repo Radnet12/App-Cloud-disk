@@ -195,8 +195,12 @@ class FileService {
     async uploadAvatar(userId, file) {
         const user = await UserModel.findById(userId);
 
+        if (!["image/png", "image/jpeg", "image/jpg"].includes(file.mimetype)) {
+            throw ApiError.BadRequest("Тип файла не подходит!"); 
+        }
+
         // Creating name for avatar
-        const avatarName = uuid.v4() + ".jpg";
+        const avatarName = uuid.v4() + `.${file.mimetype.split("/")[1]}`;
 
         file.mv(
             path.join(
@@ -210,7 +214,7 @@ class FileService {
 
         await user.save();
 
-        return;
+        return new UserDto(user);
     }
 
     async deleteAvatar(userId) {

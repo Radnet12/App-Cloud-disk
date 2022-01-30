@@ -5,6 +5,7 @@ import { FormAuth } from "../../../models/FormAuth";
 
 // API
 import { AuthService } from "../../../services/AuthService";
+import { FileService } from "../../../services/FileService";
 
 export const registration = createAsyncThunk(
     "user/registerUser",
@@ -57,6 +58,42 @@ export const authorization = createAsyncThunk(
             return response.data;
         } catch (e: any) {
             console.log("Ошибка при авторизации через токен: ", e.response);
+            return rejectWithValue(e.response?.data?.message);
+        }
+    }
+);
+
+export const uploadAvatar = createAsyncThunk(
+    "user/uploadAvatar",
+    async (file: File, { rejectWithValue }) => {
+        try {
+            const response = await FileService.uploadAvatar(file);
+
+            if (response.status !== 200) {
+                throw response;
+            }
+
+            return response.data;
+        } catch (e: any) {
+            console.log("Ошибка при загрузки изображения: ", e.response);
+            return rejectWithValue(e.response?.data?.message);
+        }
+    }
+);
+
+export const deleteAvatar = createAsyncThunk(
+    "user/deleteAvatar",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await FileService.deleteAvatar();
+
+            if (response.status !== 200) {
+                throw response;
+            }
+
+            return response.data;
+        } catch (e: any) {
+            console.log("Ошибка при удалении изображения: ", e.response);
             return rejectWithValue(e.response?.data?.message);
         }
     }

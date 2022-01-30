@@ -1,5 +1,6 @@
 export enum RouteNames {
     LOGIN = "/login",
     REGISTRATION = "/registration",
-    MAIN = "/"
+    MAIN = "/",
+    PROFILE = "/profile"
 };

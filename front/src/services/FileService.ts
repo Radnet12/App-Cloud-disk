@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 
 // Types
 import { FileType } from "../store/reducers/FileReducer/FileReducerTypes";
+import { UserType } from "../store/reducers/UserReducer/UserReducerTypes";
 
 // API
 import { $api } from "./AxiosInstance";
@@ -77,5 +78,17 @@ export class FileService {
         return $api.get("/files/search", {
             params: { search },
         });
+    }
+
+    static uploadAvatar(file: File): Promise<AxiosResponse<UserType>> {
+        let formData = new FormData();
+
+        formData.append("file", file);
+
+        return $api.post("/files/avatar", formData);
+    }
+
+    static deleteAvatar(): Promise<AxiosResponse<UserType>> {
+        return $api.delete("/files/avatar");
     }
 }

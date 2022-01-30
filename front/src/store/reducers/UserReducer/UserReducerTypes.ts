@@ -11,4 +11,5 @@ export type UserReducerState = {
     isAuth: boolean;
     isFetchError: string | null;
     isLoading: boolean;
+    isAvatarLoading: boolean;
 };

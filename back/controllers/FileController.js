@@ -119,9 +119,9 @@ class FileController {
 
     async uploadAvatar(req, res, next) {
         try {
-            await FileService.uploadAvatar(req.user.id, req.files.file);
+            const newUser = await FileService.uploadAvatar(req.user.id, req.files.file);
 
-            return res.status(200);
+            return res.json(newUser);
         } catch (e) {
             next(e);
         }

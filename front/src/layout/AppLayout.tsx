@@ -49,7 +49,9 @@ export const AppLayout: React.FC = () => {
         <>
             <div className="wrapper">
                 <Header />
-                <main>{isLoading ? <Loader fixed /> : <Outlet />}</main>
+                <main>
+                    {isLoading ? <Loader /> : <Outlet />}
+                </main>
             </div>
             <ToastContainer
                 closeOnClick={false}
